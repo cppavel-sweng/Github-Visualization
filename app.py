@@ -29,6 +29,18 @@ def put_new_animal(animal_name, animal_type):
 
     return x
 
+def get_data(handle):
+    return {'avg-t-c': 100,
+            'n-c': 200,
+            'lar-diff': 500, 
+            'n-r-w': 10, 
+            'n-pr-i': 10, 
+            'avg-t-pr-i': 200,
+            'repos-include-course-codes': False
+    }
+
+def analyze_developer(data):
+    return "Open Source Fan"
 
 def get_db():
     client = MongoClient(host='test_mongodb',
@@ -43,9 +55,18 @@ def get_db():
 def main_page():
     return render_template('index.html')
 
-@app.route('/type-of-developer')
+@app.route('/type-of-developer',  methods=['GET', 'POST'])
 def type_of_developer():
-    return render_template('type_of_developer.html')
+    if request.method == 'POST':
+        developer_handle = request.form.get('handle')
+        developer_data = get_data(developer_handle)
+        type_of_developer = analyze_developer(developer_data)
+        data = {'chart_data': {'developer_type': type_of_developer, 'data': developer_data}}
+        print(data)
+        return render_template('type_of_developer_result.html', data=data)
+
+    else:
+        return render_template('type_of_developer.html')
 
 @app.route('/top-developers-for-a-repo')
 def top_developers_for_a_repo():
