@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import pymongo
 from pymongo import MongoClient
 
@@ -40,8 +40,20 @@ def get_db():
     return db
 
 @app.route('/')
-def ping_server():
-    return "Welcome to the world of animals."
+def main_page():
+    return render_template('index.html')
+
+@app.route('/type-of-developer')
+def type_of_developer():
+    return render_template('type_of_developer.html')
+
+@app.route('/top-developers-for-a-repo')
+def top_developers_for_a_repo():
+    return render_template('top_developers_for_a_repo.html')
+
+@app.route('/hiring-system')
+def hiring_system():
+    return render_template('hiring_system.html')
 
 @app.route('/animals')
 def get_stored_animals():
