@@ -1,8 +1,9 @@
 from github import Github
 import re
 from datetime import timezone
+import os
 
-g = Github("TOKEN")
+g = Github(os.environ["GITHUB_TOKEN"])
 
 def extract_repo_name(commit_url):
     pattern = re.compile("https://api.github.com/repos/(.*)/git/")
