@@ -1,6 +1,7 @@
 from github import Github
 import re
 from datetime import timezone
+from programming_languages import EXTENSION_TO_LANG
 import os
 
 g = Github(os.environ["GITHUB_TOKEN"])
@@ -137,9 +138,21 @@ def get_type_of_developer_data(user_name):
     print("Received commits")
 
     repos = []
+    languages = {}
     for commit in commits:
         if extract_repo_name(commit.commit.url) not in repos:
             repos.append(extract_repo_name(commit.commit.url))
+
+        for file in commit.files:
+            name, extension = os.path.splitext(file.filename)
+
+            if extension in EXTENSION_TO_LANG:
+                language = EXTENSION_TO_LANG[extension]
+
+                if language in languages:
+                    languages[language]["changes"] = languages[language]["changes"] + file.additions + file.deletions
+                else:
+                    languages[language] = {"changes": file.additions + file.deletions}
 
     print("Computed number of repos")
     
@@ -156,7 +169,6 @@ def get_type_of_developer_data(user_name):
     changes = [0]*commit_count
 
     for index in range(0, commit_count):
-        print(f"{index}: {commits[index].stats.total}")
         changes[index] = commits[index].stats.total
 
 
@@ -164,7 +176,8 @@ def get_type_of_developer_data(user_name):
         "commit_count": commit_count,
         "repos": repos,
         "avg_time_between_commits": differences,
-        "diffbase_per_commit": changes
+        "diffbase_per_commit": changes,
+        "languages": languages
     }
 
 
@@ -185,7 +198,8 @@ def get_basic_account_info(user_name):
         "private_repos_owned": user.owned_private_repos,
         "updated_at": user.updated_at,
         "url": user.url,
-        "team_count": user.team_count
+        "team_count": user.team_count,
+        "avatar_url": user.avatar_url
     }
 
 
