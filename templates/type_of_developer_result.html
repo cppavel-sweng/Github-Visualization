@@ -51,22 +51,19 @@
        </script>
       </div>
       <div class="col" id="repos">
-        List of all repos user worked on
+        List of all repos user worked on. Most recent comes first.
         <script type="text/javascript">
-          const repos = {
-            "repo1": "https://github.com/SWENG-2021/VOTN-Facial-Recognition",
-             "repo2": "https://github.com/cppavel/TelegramItinerary"
-           };
-
-           for (const [key, value] of Object.entries(repos)) {
-             $("#repos").append("<p><a href=\"" + value +"\">" + key + "</a></p>");
+          const dd = {{developer_detailed_data|safe}};
+          const repos = dd["repos"];
+           for (let i = 0; i < repos.length; i++) {
+             $("#repos").append("<p><a href=\"https://github.com/" + repos[i] +"\">" + repos[i] + "</a></p>");
            }
         </script>
       </div>
       <div class="col">
-        <p>Total commit count is 100</p>
-        <p>Average diffbase per commit</p>
-        <p>Average time between commits</p>
+        <p>Total commit count in the analysis period: {{developer_detailed_data["commit_count"]}} </p>
+        <p>Average change size in LoC: {{developer_detailed_data["average_change_size"]}}</p>
+        <p>Average time between consequtive commits: {{developer_detailed_data["average_time_between_commits"]}} hours</p>
       </div>
     </div>
     <div class="row">

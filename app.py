@@ -48,10 +48,11 @@ def type_of_developer():
     if request.method == 'POST':
         developer_handle = request.form.get('handle')
         developer_basic_details = github_data.get_basic_account_info(developer_handle)
-
+        developer_detailed_data = github_data.get_detailed_data(developer_handle)
         return render_template(
             'type_of_developer_result.html', 
-            developer_basic_details=developer_basic_details
+            developer_basic_details=developer_basic_details,
+            developer_detailed_data=developer_detailed_data
             )
 
     else:

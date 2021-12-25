@@ -6,6 +6,33 @@ import os
 
 g = Github(os.environ["GITHUB_TOKEN"])
 
+def convert_to_histogram(list, bins):
+    sorted_list = sorted(list)
+
+    max_value = sorted_list[-1]
+
+    print(f"Max value is {max_value}")
+
+    step = max_value/bins
+
+    print(f"Step is {step}")
+
+    histogram = [0]*(bins)
+    starting_value = 0
+    for index in range(0, len(sorted_list)):
+        if step*starting_value <= sorted_list[index] and step*(starting_value + 1) >= sorted_list[index]:
+            histogram[starting_value] = histogram[starting_value] + 1
+        else:
+            starting_value = starting_value + 1
+            histogram[starting_value] = 1
+
+    labels = [""]*(bins)
+    for index in range(0, bins):
+        labels[index] = f"[{round(step*index,1)};{round(step*(index+1),1)}]"
+
+    return (histogram, labels) 
+
+
 def extract_repo_name(commit_url):
     pattern = re.compile("https://api.github.com/repos/(.*)/git/")
     match = pattern.search(commit_url).group(1)
@@ -134,7 +161,7 @@ def search_issues(user_name):
 
     }
 
-def get_type_of_developer_data(user_name):
+def get_detailed_data(user_name):
     commits = g.search_commits(f"author:{user_name}", sort='author-date', order='desc')
     commit_count = commits.totalCount
     print("Received commits")
@@ -159,26 +186,43 @@ def get_type_of_developer_data(user_name):
     print("Computed number of repos")
     
     differences = [] 
+    average_time_between_commits = 0
     for index in range(0, commits.totalCount - 1):
         first_ts = commits[index].commit.author.date.replace(tzinfo=timezone.utc).timestamp()
         second_ts = commits[index + 1].commit.author.date.replace(tzinfo=timezone.utc).timestamp()
         difference = - (second_ts - first_ts)/3600 
         differences.append(difference)
+        average_time_between_commits = average_time_between_commits + difference
+    
+    if commit_count > 0:
+        average_time_between_commits = average_time_between_commits/commit_count
+    else:
+        average_time_between_commits = None
         
 
     print("Done with differences")
+
+    average_change_size = 0
 
     changes = [0]*commit_count
 
     for index in range(0, commit_count):
         changes[index] = commits[index].stats.total
+        average_change_size = average_change_size + commits[index].stats.total
+
+    if commit_count > 0:
+        average_change_size = average_change_size/commit_count
+    else:
+        average_change_size = None
 
 
     return {
+        "average_time_between_commits": round(average_time_between_commits,1),
+        "average_change_size": round(average_change_size,1),
         "commit_count": commit_count,
         "repos": repos,
-        "avg_time_between_commits": differences,
-        "diffbase_per_commit": changes,
+        "time_between_commits": convert_to_histogram(differences,15),
+        "diffbase_per_commit": convert_to_histogram(changes, 15),
         "languages": languages
     }
 
@@ -207,6 +251,7 @@ def get_basic_account_info(user_name):
 
     
 if __name__ == "__main__":
-    print(get_type_of_developer_data("cppavel-sweng"))
-    print(search_issues("cppavel-sweng"))
-    print(get_basic_account_info("cppavel-sweng"))
+    test = get_detailed_data("cppavel-sweng")
+    print(test)
+    #print(search_issues("cppavel-sweng"))
+    #print(get_basic_account_info("cppavel-sweng"))
