@@ -2,6 +2,8 @@ services:
   app:
     build: .
     command: python -u app.py
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
     ports:
       - "5000:5000"
     links:

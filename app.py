@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 import pymongo
 from pymongo import MongoClient
+import github_data
 
 app = Flask(__name__)
 
@@ -29,19 +30,6 @@ def put_new_animal(animal_name, animal_type):
 
     return x
 
-def get_data(handle):
-    return {'avg-t-c': 100,
-            'n-c': 200,
-            'lar-diff': 500, 
-            'n-r-w': 10, 
-            'n-pr-i': 10, 
-            'avg-t-pr-i': 200,
-            'repos-include-course-codes': False
-    }
-
-def analyze_developer(data):
-    return "Open Source Fan"
-
 def get_db():
     client = MongoClient(host='test_mongodb',
                          port=27017, 
@@ -59,11 +47,12 @@ def main_page():
 def type_of_developer():
     if request.method == 'POST':
         developer_handle = request.form.get('handle')
-        developer_data = get_data(developer_handle)
-        type_of_developer = analyze_developer(developer_data)
-        data = {'chart_data': {'developer_type': type_of_developer, 'data': developer_data}}
-        print(data)
-        return render_template('type_of_developer_result.html', data=data)
+        developer_basic_details = github_data.get_basic_account_info(developer_handle)
+
+        return render_template(
+            'type_of_developer_result.html', 
+            developer_basic_details=developer_basic_details
+            )
 
     else:
         return render_template('type_of_developer.html')

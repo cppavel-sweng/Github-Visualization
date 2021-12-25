@@ -18,29 +18,29 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <img src="https://avatars.githubusercontent.com/u/24837651?v=4" class="img-fluid rounded" alt="Responsive image">
+        <img src="{{developer_basic_details["avatar_url"]}}" class="img-fluid rounded" alt="Responsive image">
       </div>
 
       <div class="col">
-        <p class="fw-bold">Name</p>
-        <p class="fw-bold">Bio: pavel petrukhin</p>
-        <p class="fw-bold">Company: company</p>
-        <p class="fw-bold">pavel email</p>
+        <p class="fw-bold">{{developer_basic_details["name"]}}</p>
+        <p class="fw-bold">{{developer_basic_details["bio"]}}</p>
+        <p class="fw-bold">{{developer_basic_details["company"]}}</p>
+        <p class="fw-bold">{{developer_basic_details["email"]}}</p>
+        <p class="fw-bold">{{developer_basic_details["location"]}}</p>
       </div>
       
       <div class="col">
-        <p class="fw-bold"><a href="https://github.com/cppavel" class="link-primary">cppavel</a></p>
-        <p class="fw-bold">Profile created 2 years ago</p>
-        <p class="fw-bold">Profile updated 2 days ago</p>
-        <p class="fw-bold">Profile updated 2 days ago</p>
-        <p class="fw-bold">Open for work</p>
+        <p class="fw-bold"><a href="https://github.com/{{developer_basic_details["login"]}}" class="link-primary">{{developer_basic_details["login"]}}</a></p>
+        <p class="fw-bold">Profile created: {{developer_basic_details["created_at"]}}</p>
+        <p class="fw-bold">Profile last updated: {{developer_basic_details["updated_at"]}}</p>
+        <p class="fw-bold">Open for work: {{developer_basic_details["hireable"]}}</p>
       </div>
 
       <div class ="col">
-        <p class="fw-bold">Following</p>
-        <p class="fw-bold">Followers</p>
-        <p class="fw-bold">Private repos owned</p>
-        <p class="fw-bold">Member of 10 teams</p>
+        <p class="fw-bold">Is following {{developer_basic_details["following"]}} users</p>
+        <p class="fw-bold">Is followed by {{developer_basic_details["followers"]}} users</p>
+        <p class="fw-bold">Owns {{developer_basic_details["private_repos_owned"]}} private repos</p>
+        <p class="fw-bold">Is member of {{developer_basic_details["team_count"]}} teams</p>
       </div>
     </div>
     <div class="row">

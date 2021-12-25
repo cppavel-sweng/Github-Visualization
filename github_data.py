@@ -112,8 +112,10 @@ def search_issues(user_name):
     for pr in pr_author:
         average_comments = average_comments + pr.comments
 
-    average_number_of_comments_in_issues_created = average_comments/(number_of_issues_created + number_of_pr_created)
-
+    if number_of_issues_created + number_of_pr_created > 0:
+        average_number_of_comments_in_issues_created = average_comments/(number_of_issues_created + number_of_pr_created)
+    else:
+        average_number_of_comments_in_issues_created = None
 
     return {
         "issues_created": number_of_issues_created,
@@ -185,26 +187,26 @@ def get_basic_account_info(user_name):
     user = g.get_user(user_name)
 
     return {
-        "bio": user.bio,
-        "company": user.company,
+        "bio": user.bio or "Bio not specified",
+        "company": user.company or "Company not specified",
         "created_at": user.created_at,
-        "email": user.email,
-        "followers": user.followers,
-        "following": user.following,
-        "hireable": user.hireable,
-        "location": user.location,
-        "name": user.name,
+        "email": user.email or "Email Not Specified",
+        "followers": user.followers or "Hidden",
+        "following": user.following or "Hidden",
+        "hireable": user.hireable or "Hiring status not specified",
+        "location": user.location or "Location not specified",
+        "name": user.name or "Name not specified",
         "login": user.login,
-        "private_repos_owned": user.owned_private_repos,
-        "updated_at": user.updated_at,
+        "private_repos_owned": user.owned_private_repos or "Hidden",
+        "updated_at": user.updated_at or "Hidden",
         "url": user.url,
-        "team_count": user.team_count,
+        "team_count": user.team_count or "Hidden",
         "avatar_url": user.avatar_url
     }
 
 
     
 if __name__ == "__main__":
-    print(get_type_of_developer_data("cppavel"))
-    print(search_issues("cppavel"))
-    print(get_basic_account_info("cppavel"))
+    print(get_type_of_developer_data("cppavel-sweng"))
+    print(search_issues("cppavel-sweng"))
+    print(get_basic_account_info("cppavel-sweng"))

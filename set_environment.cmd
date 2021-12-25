@@ -1,1 +1,0 @@
-setx GITHUB_TOKEN %1
