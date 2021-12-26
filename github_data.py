@@ -20,11 +20,7 @@ def convert_to_histogram(list, bins, percentile_to_keep):
 
     max_value = sorted_list[-1]
 
-    print(f"Max value is {max_value}")
-
     step = max_value/bins
-
-    print(f"Step is {step}")
 
     histogram = [0]*(bins)
 
@@ -52,48 +48,74 @@ def extract_repo_name(commit_url):
 
 def search_issues(user_name):
 
-    issue_author = g.search_issues(f"author:{user_name} is:issue", sort='created', order='desc')
-    issue_assignee = g.search_issues(f"assignee:{user_name} is:issue", sort='created', order='desc')
-    pr_author = g.search_issues(f"author:{user_name} is:pr", sort='created', order='desc')
-    pr_assignee = g.search_issues(f"assignee:{user_name} is:pr", sort='created', order='desc')
+    issue_author_paginated = g.search_issues(f"author:{user_name} is:issue", sort='created', order='desc')
+    issue_assignee_paginated = g.search_issues(f"assignee:{user_name} is:issue", sort='created', order='desc')
+    pr_author_paginated = g.search_issues(f"author:{user_name} is:pr", sort='created', order='desc')
+    pr_assignee_paginated = g.search_issues(f"assignee:{user_name} is:pr", sort='created', order='desc')
 
+    issue_author = []
 
-    number_of_issues_created = issue_author.totalCount
-    number_of_issues_assigned = issue_assignee.totalCount
-    number_of_pr_created = pr_author.totalCount
-    number_of_pr_assigned = pr_assignee.totalCount
+    for issue in issue_author_paginated:
+        issue_author.append(issue)
+
+    issue_assignee = []
+
+    for issue in issue_assignee_paginated:
+        issue_assignee.append(issue)
+
+    pr_author = []
+
+    for pr in pr_author_paginated:
+        pr_author.append(pr)
+
+    pr_assignee = []
+
+    for pr in pr_assignee_paginated:
+        pr_assignee.append(pr)
+    
+
+    number_of_issues_created = len(issue_author)
+    number_of_issues_assigned = len(issue_assignee)
+    number_of_pr_created = len(pr_author)
+    number_of_pr_assigned = len(pr_assignee)
+
+    print("Issues data received")
 
     time_between_issues_created = []
 
-    for index in range(0, issue_author.totalCount - 1):
+    for index in range(0, len(issue_author) - 1):
         first_ts = issue_author[index].created_at.replace(tzinfo=timezone.utc).timestamp()
         second_ts = issue_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
         difference = - (second_ts - first_ts)/3600 
         time_between_issues_created.append(difference)
+        print(f"Done with {index + 1}/{len(issue_author) - 1} times between issues created")
 
     time_between_issues_assigned = []
 
-    for index in range(0, issue_assignee.totalCount - 1):
+    for index in range(0, len(issue_assignee) - 1):
         first_ts = issue_assignee[index].created_at.replace(tzinfo=timezone.utc).timestamp()
         second_ts = issue_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
         difference = - (second_ts - first_ts)/3600 
-        time_between_issues_assigned.append(difference )
+        time_between_issues_assigned.append(difference)
+        print(f"Done with {index + 1}/{len(issue_assignee) - 1} times between issues assigned")
 
     time_between_pr_created = []
 
-    for index in range(0, pr_author.totalCount - 1):
+    for index in range(0, len(pr_author) - 1):
         first_ts = pr_author[index].created_at.replace(tzinfo=timezone.utc).timestamp()
         second_ts = pr_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
         difference = - (second_ts - first_ts)/3600 
         time_between_pr_created.append(difference)
+        print(f"Done with {index + 1}/{len(pr_author) - 1} times between pr created")
 
     time_between_pr_assigned = []
 
-    for index in range(0, pr_assignee.totalCount - 1):
+    for index in range(0, len(pr_assignee) - 1):
         first_ts = pr_assignee[index].created_at.replace(tzinfo=timezone.utc).timestamp()
         second_ts = pr_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
         difference = - (second_ts - first_ts)/3600 
         time_between_pr_assigned.append(difference)
+        print(f"Done with {index + 1}/{len(pr_assignee) - 1} times between pr assigned")
 
 
     #how many issues assigned to the person were closed by them
@@ -141,7 +163,6 @@ def search_issues(user_name):
     #how many comments did issues created by the user had on average (how impactful they were)
     #as discussions are the most important part
 
-
     average_comments = 0
 
     for issue in issue_author:
@@ -154,6 +175,8 @@ def search_issues(user_name):
         average_number_of_comments_in_issues_created = average_comments/(number_of_issues_created + number_of_pr_created)
     else:
         average_number_of_comments_in_issues_created = None
+
+    print("Done with averages and other summary measures for issues data")
 
     return {
         "issues_created": number_of_issues_created,
@@ -188,6 +211,8 @@ def get_detailed_data(user_name):
     changes = []
     average_change_size = 0
 
+    index = 0
+
     for commit in commits_list:
         if extract_repo_name(commit.commit.url) not in repos:
             repos.append(extract_repo_name(commit.commit.url))
@@ -205,6 +230,9 @@ def get_detailed_data(user_name):
                     languages[language] = languages[language] + file.additions + file.deletions
                 else:
                     languages[language] = file.additions + file.deletions
+        
+        index = index + 1
+        print(f"Done with {index}/{len(commits_list)} commits")
 
     sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
 
@@ -218,6 +246,7 @@ def get_detailed_data(user_name):
                     commits_list[index+1].commit.committer.date).total_seconds()/3600)
         )
         average_time_between_commits = average_time_between_commits + differences[-1]
+        print(f"Done with {index + 1}/{len(commits_list) - 1} differences")
 
 
     if len(differences) == 0:
@@ -230,7 +259,7 @@ def get_detailed_data(user_name):
     else:
         average_change_size = average_change_size/len(changes)
         
-    commit_count = commits.totalCount
+    commit_count = len(commits_list)
 
     return {
         "average_time_between_commits": round(average_time_between_commits,1),
@@ -245,6 +274,8 @@ def get_detailed_data(user_name):
 
 def get_basic_account_info(user_name):
     user = g.get_user(user_name)
+
+    print("Done with basic info")
 
     return {
         "bio": user.bio or "Bio not specified",
@@ -267,7 +298,10 @@ def get_basic_account_info(user_name):
 
     
 if __name__ == "__main__":
-    test = get_detailed_data("cppavel-sweng")
-    print(test)
-    #print(search_issues("cppavel-sweng"))
-    #print(get_basic_account_info("cppavel-sweng"))
+    test_dd = get_detailed_data("cppavel")
+    test_di = search_issues("cppavel")
+    test_bi = get_basic_account_info("cppavel")
+    print("\n\n\n\n\n\n\n\n")
+    print(test_bi)
+    print(test_dd)
+    print(test_di)
