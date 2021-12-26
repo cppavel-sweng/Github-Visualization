@@ -49,10 +49,16 @@ def type_of_developer():
         developer_handle = request.form.get('handle')
         developer_basic_details = github_data.get_basic_account_info(developer_handle)
         developer_detailed_data = github_data.get_detailed_data(developer_handle)
+        developer_issues_data = github_data.search_issues(developer_handle)
+        print(developer_handle)
+        print(developer_basic_details)
+        print(developer_detailed_data)
+        print(developer_issues_data)
         return render_template(
             'type_of_developer_result.html', 
             developer_basic_details=developer_basic_details,
-            developer_detailed_data=developer_detailed_data
+            developer_detailed_data=developer_detailed_data,
+            developer_issues_data=developer_issues_data
             )
 
     else:

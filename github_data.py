@@ -3,11 +3,20 @@ import re
 from datetime import timezone
 from programming_languages import EXTENSION_TO_LANG
 import os
+import pytz
 
 g = Github(os.environ["GITHUB_TOKEN"])
 
-def convert_to_histogram(list, bins):
+def convert_to_histogram(list, bins, percentile_to_keep):
     sorted_list = sorted(list)
+
+    if len(sorted_list) == 0:
+        return [[1],["No data"]]
+
+    sorted_list = sorted_list[0: int(percentile_to_keep*len(sorted_list))]
+
+    if len(sorted_list) == 0:
+        return [[1],["No data"]]
 
     max_value = sorted_list[-1]
 
@@ -18,19 +27,21 @@ def convert_to_histogram(list, bins):
     print(f"Step is {step}")
 
     histogram = [0]*(bins)
-    starting_value = 0
-    for index in range(0, len(sorted_list)):
-        if step*starting_value <= sorted_list[index] and step*(starting_value + 1) >= sorted_list[index]:
-            histogram[starting_value] = histogram[starting_value] + 1
-        else:
-            starting_value = starting_value + 1
-            histogram[starting_value] = 1
+
+    print(sorted_list)
+
+    for element in sorted_list:
+        bin = int(element/step)
+        if bin >= bins:
+            bin = bins - 1
+
+        histogram[bin] = histogram[bin] + 1
 
     labels = [""]*(bins)
     for index in range(0, bins):
         labels[index] = f"[{round(step*index,1)};{round(step*(index+1),1)}]"
 
-    return (histogram, labels) 
+    return [histogram, labels]
 
 
 def extract_repo_name(commit_url):
@@ -149,28 +160,45 @@ def search_issues(user_name):
         "issues_assigned": number_of_issues_assigned,
         "pr_created": number_of_pr_created,
         "pr_assigned": number_of_pr_assigned,
-        "time_between_i_c": time_between_issues_created,
-        "time_between_i_a": time_between_issues_assigned,
-        "time_between_pr_c": time_between_pr_created,
-        "time_between_pr_a": time_between_pr_assigned,
-        "issues_assinged_closed": issues_assinged_closed,
+        "time_between_i_c": convert_to_histogram(time_between_issues_created, int(number_of_issues_created/2) + 1, 1),
+        "time_between_i_a": convert_to_histogram(time_between_issues_assigned, int(number_of_issues_assigned/2) + 1, 1),
+        "time_between_pr_c": convert_to_histogram(time_between_pr_created, int(number_of_pr_created/2) + 1, 1),
+        "time_between_pr_a": convert_to_histogram(time_between_pr_assigned, int(number_of_pr_assigned/2) + 1, 1),
+        "issues_assigned_closed": issues_assinged_closed,
         "pr_assigned_closed": pr_assigned_closed,
-        "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created,
-        "avg_time_to_close_issue": average_time_to_close_issue,
-        "avg_time_to_review_pr": average_time_to_review_pr
+        "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created or "N/A",
+        "avg_time_to_close_issue": average_time_to_close_issue or "N/A",
+        "avg_time_to_review_pr": average_time_to_review_pr or "N/A"
 
     }
 
 def get_detailed_data(user_name):
-    commits = g.search_commits(f"author:{user_name}", sort='author-date', order='desc')
-    commit_count = commits.totalCount
+    commits = g.search_commits(f"author:{user_name}", sort='committer-date', order='desc')
+
     print("Received commits")
 
     repos = []
     languages = {}
+    index = 0
+    previous_date = None 
+
+    differences = [] 
+    changes = []
+    average_time_between_commits = 0
+    average_change_size = 0
+
     for commit in commits:
+        if index > 0:
+            print(f"cur={commit.commit.committer.date}, prev={previous_date}")
+            difference = (commit.commit.committer.date - previous_date).total_seconds()/3600
+            differences.append(difference)
+            average_time_between_commits = average_time_between_commits + difference
+
         if extract_repo_name(commit.commit.url) not in repos:
             repos.append(extract_repo_name(commit.commit.url))
+
+        changes.append(commit.stats.total)
+        average_change_size = average_change_size + commit.stats.total
 
         for file in commit.files:
             name, extension = os.path.splitext(file.filename)
@@ -179,51 +207,39 @@ def get_detailed_data(user_name):
                 language = EXTENSION_TO_LANG[extension]
 
                 if language in languages:
-                    languages[language]["changes"] = languages[language]["changes"] + file.additions + file.deletions
+                    languages[language] = languages[language] + file.additions + file.deletions
                 else:
-                    languages[language] = {"changes": file.additions + file.deletions}
+                    languages[language] = file.additions + file.deletions
 
-    print("Computed number of repos")
-    
-    differences = [] 
-    average_time_between_commits = 0
-    for index in range(0, commits.totalCount - 1):
-        first_ts = commits[index].commit.author.date.replace(tzinfo=timezone.utc).timestamp()
-        second_ts = commits[index + 1].commit.author.date.replace(tzinfo=timezone.utc).timestamp()
-        difference = - (second_ts - first_ts)/3600 
-        differences.append(difference)
-        average_time_between_commits = average_time_between_commits + difference
-    
-    if commit_count > 0:
-        average_time_between_commits = average_time_between_commits/commit_count
+        previous_date = commit.commit.committer.date
+        print(index)
+        index = index + 1
+
+
+    sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
+
+    print("Computed data")
+
+    if len(differences) == 0:
+        average_time_between_commits = -1
     else:
-        average_time_between_commits = None
+        average_time_between_commits = average_time_between_commits/len(differences)
+    
+    if len(changes) == 0:
+        average_change_size = -1
+    else:
+        average_change_size = average_change_size/len(changes)
         
-
-    print("Done with differences")
-
-    average_change_size = 0
-
-    changes = [0]*commit_count
-
-    for index in range(0, commit_count):
-        changes[index] = commits[index].stats.total
-        average_change_size = average_change_size + commits[index].stats.total
-
-    if commit_count > 0:
-        average_change_size = average_change_size/commit_count
-    else:
-        average_change_size = None
-
+    commit_count = commits.totalCount
 
     return {
         "average_time_between_commits": round(average_time_between_commits,1),
         "average_change_size": round(average_change_size,1),
         "commit_count": commit_count,
         "repos": repos,
-        "time_between_commits": convert_to_histogram(differences,15),
-        "diffbase_per_commit": convert_to_histogram(changes, 15),
-        "languages": languages
+        "time_between_commits": convert_to_histogram(differences,int(commit_count/2) + 1, 0.8),
+        "diffbase_per_commit": convert_to_histogram(changes, int(commit_count/2) + 1, 0.8),
+        "languages": sorted_tuples
     }
 
 
