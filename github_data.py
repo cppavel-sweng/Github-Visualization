@@ -175,25 +175,20 @@ def search_issues(user_name):
 def get_detailed_data(user_name):
     commits = g.search_commits(f"author:{user_name}", sort='committer-date', order='desc')
 
+    commits_list = []
+
+    for commit in commits:
+        commits_list.append(commit)
+
     print("Received commits")
 
     repos = []
     languages = {}
-    index = 0
-    previous_date = None 
 
-    differences = [] 
     changes = []
-    average_time_between_commits = 0
     average_change_size = 0
 
-    for commit in commits:
-        if index > 0:
-            print(f"cur={commit.commit.committer.date}, prev={previous_date}")
-            difference = (commit.commit.committer.date - previous_date).total_seconds()/3600
-            differences.append(difference)
-            average_time_between_commits = average_time_between_commits + difference
-
+    for commit in commits_list:
         if extract_repo_name(commit.commit.url) not in repos:
             repos.append(extract_repo_name(commit.commit.url))
 
@@ -211,14 +206,19 @@ def get_detailed_data(user_name):
                 else:
                     languages[language] = file.additions + file.deletions
 
-        previous_date = commit.commit.committer.date
-        print(index)
-        index = index + 1
-
-
     sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
 
-    print("Computed data")
+    differences = [] 
+    average_time_between_commits = 0
+
+    for index in range(0, len(commits_list)-1):
+        differences.append(
+            (
+                (commits_list[index].commit.committer.date-
+                    commits_list[index+1].commit.committer.date).total_seconds()/3600)
+        )
+        average_time_between_commits = average_time_between_commits + differences[-1]
+
 
     if len(differences) == 0:
         average_time_between_commits = -1
