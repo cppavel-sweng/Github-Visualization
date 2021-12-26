@@ -3378,7 +3378,11 @@ data = [
 
 result = {}
 for element in data:
-    if "extensions" in element:
+    if "extensions" in element and "type" in element:
+
+        if element["type"] != "programming":
+           continue 
+         
         extensions = element["extensions"]
         name = element["name"]
 

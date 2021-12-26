@@ -2,12 +2,14 @@ from github import Github
 import re
 from datetime import timezone
 from programming_languages import EXTENSION_TO_LANG
+import statistics
 import os
-import pytz
 
 g = Github(os.environ["GITHUB_TOKEN"])
 
 def convert_to_histogram(list, bins, percentile_to_keep):
+    negative_errors = []
+
     sorted_list = sorted(list)
 
     if len(sorted_list) == 0:
@@ -24,12 +26,14 @@ def convert_to_histogram(list, bins, percentile_to_keep):
 
     histogram = [0]*(bins)
 
-    print(sorted_list)
-
     for element in sorted_list:
         bin = int(element/step)
         if bin >= bins:
             bin = bins - 1
+
+        if bin < 0:
+            negative_errors.append(element)
+            continue
 
         histogram[bin] = histogram[bin] + 1
 
@@ -37,6 +41,7 @@ def convert_to_histogram(list, bins, percentile_to_keep):
     for index in range(0, bins):
         labels[index] = f"[{round(step*index,1)};{round(step*(index+1),1)}]"
 
+    print(f"Negative errors: {negative_errors}")
     return [histogram, labels]
 
 
@@ -183,10 +188,10 @@ def search_issues(user_name):
         "issues_assigned": number_of_issues_assigned,
         "pr_created": number_of_pr_created,
         "pr_assigned": number_of_pr_assigned,
-        "time_between_i_c": convert_to_histogram(time_between_issues_created, int(number_of_issues_created/2) + 1, 1),
-        "time_between_i_a": convert_to_histogram(time_between_issues_assigned, int(number_of_issues_assigned/2) + 1, 1),
-        "time_between_pr_c": convert_to_histogram(time_between_pr_created, int(number_of_pr_created/2) + 1, 1),
-        "time_between_pr_a": convert_to_histogram(time_between_pr_assigned, int(number_of_pr_assigned/2) + 1, 1),
+        "time_between_i_c": convert_to_histogram(time_between_issues_created, 10, 1),
+        "time_between_i_a": convert_to_histogram(time_between_issues_assigned, 10, 1),
+        "time_between_pr_c": convert_to_histogram(time_between_pr_created, 10, 1),
+        "time_between_pr_a": convert_to_histogram(time_between_pr_assigned, 10, 1),
         "issues_assigned_closed": issues_assinged_closed,
         "pr_assigned_closed": pr_assigned_closed,
         "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created or "N/A",
@@ -236,6 +241,9 @@ def get_detailed_data(user_name):
 
     sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
 
+    if len(repos) > 10:
+        repos = repos[:10]
+
     differences = [] 
     average_time_between_commits = 0
 
@@ -250,13 +258,17 @@ def get_detailed_data(user_name):
 
 
     if len(differences) == 0:
+        median_time_between_commits = - 1
         average_time_between_commits = -1
     else:
+        median_time_between_commits = statistics.median(differences)
         average_time_between_commits = average_time_between_commits/len(differences)
     
     if len(changes) == 0:
+        median_diffbase = -1
         average_change_size = -1
     else:
+        median_diffbase = statistics.median(changes)
         average_change_size = average_change_size/len(changes)
         
     commit_count = len(commits_list)
@@ -264,10 +276,12 @@ def get_detailed_data(user_name):
     return {
         "average_time_between_commits": round(average_time_between_commits,1),
         "average_change_size": round(average_change_size,1),
+        "median_time_between_commits": round(median_time_between_commits, 1),
+        "median_diffbase_per_commit": round(median_diffbase, 1),
         "commit_count": commit_count,
         "repos": repos,
-        "time_between_commits": convert_to_histogram(differences,int(commit_count/2) + 1, 0.8),
-        "diffbase_per_commit": convert_to_histogram(changes, int(commit_count/2) + 1, 0.8),
+        "time_between_commits": convert_to_histogram(differences, 15, 0.9),
+        "diffbase_per_commit": convert_to_histogram(changes, 15, 0.9),
         "languages": sorted_tuples
     }
 

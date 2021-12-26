@@ -42,7 +42,7 @@
     </div>
     <div class="row">
       <div class="col" id="programming_langs">
-        List of all additions and deletions by file types derived using the file extensions from commits, if multiple file types are stated, it means that they all have the same file extension:
+        List of programming languages and the sizes of changes made with them:
         <script type="text/javascript">
           const languages = dd["languages"];
           for (let i = 0; i < languages.length; i++){
@@ -51,7 +51,7 @@
        </script>
       </div>
       <div class="col" id="repos">
-        List of all repos user worked on. Most recent comes first.
+        List of 10 most recent repos user worked on (most recent comes first).
         <script type="text/javascript">
           const repos = dd["repos"];
            for (let i = 0; i < repos.length; i++) {
@@ -61,12 +61,14 @@
       </div>
       <div class="col">
         <p>Total commit count in the analysis period (most recent): {{developer_detailed_data["commit_count"]}} </p>
+        <p>Median commit size in LoC: {{developer_detailed_data["median_diffbase_per_commit"]}}</p>
+        <p>Median time between consequtive commits: {{developer_detailed_data["median_time_between_commits"]}} hours</p>
         <p>Average commit size in LoC: {{developer_detailed_data["average_change_size"]}}</p>
         <p>Average time between consequtive commits: {{developer_detailed_data["average_time_between_commits"]}} hours</p>
       </div>
     </div>
     <div class="row">
-      <p class="text-center fw-bold">Distributions are cut at 80% percentile to remove unwanted outliers</p>
+      <p class="text-center fw-bold">The below 2 distributions were cut at 90 percentile to remove outliers</p>
     </div>
     <div class="row">
       <div class="col">
@@ -88,8 +90,8 @@
         <p>User closed {{developer_issues_data["issues_assigned_closed"]}}/{{developer_issues_data["issues_assigned"]}} issues assigned to them</p>
         <p>User closed {{developer_issues_data["pr_assigned_closed"]}}/{{developer_issues_data["pr_assigned"]}} pull requests assigned to them</p>
         <p>Average number of comments in issues created: {{developer_issues_data["avg_number_of_comments_in_created"]}}</p>
-        <p>Average time to close issue: {{developer_issues_data["avg_time_to_close_issue"]}}</p>
-        <p>Average time to close (review) PR: {{developer_issues_data["avg_time_to_review_pr"]}}</p>
+        <p>Average time to close issue: {{developer_issues_data["avg_time_to_close_issue"]}} hours</p>
+        <p>Average time to close (review) PR: {{developer_issues_data["avg_time_to_review_pr"]}} hours</p>
       </div>
     </div>
     <div class="row">

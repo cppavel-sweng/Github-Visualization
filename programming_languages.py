@@ -1,23 +1,7 @@
 EXTENSION_TO_LANG ={
- '.1': 'Groff',
- '.1in': 'Groff',
- '.1m': 'Groff',
- '.1x': 'Groff',
- '.2': 'Groff',
- '.3': 'Groff',
- '.3in': 'Groff',
- '.3m': 'Groff',
- '.3qt': 'Groff',
- '.3x': 'Groff',
- '.4': 'Groff',
  '.4th': 'Forth',
- '.5': 'Groff',
- '.6': 'Groff',
  '.6pl': 'Perl6',
  '.6pm': 'Perl6',
- '.7': 'Groff',
- '.8': 'Groff',
- '.9': 'Groff',
  '.E': 'E',
  '.ML': 'Standard '
         'ML',
@@ -29,7 +13,6 @@ EXTENSION_TO_LANG ={
  '.ada': 'Ada',
  '.adb': 'Ada',
  '.ado': 'Stata',
- '.adoc': 'AsciiDoc',
  '.adp': 'Tcl',
  '.ads': 'Ada',
  '.agda': 'Agda',
@@ -39,27 +22,13 @@ EXTENSION_TO_LANG ={
  '.al': 'Perl',
  '.als': 'Alloy',
  '.ampl': 'AMPL',
- '.anim': 'Unity3D '
-          'Asset',
- '.ant': 'XML',
- '.apacheconf': 'ApacheConf',
- '.apib': 'API '
-          'Blueprint',
  '.apl': 'APL',
  '.applescript': 'AppleScript',
  '.arc': 'Arc',
- '.arpa': 'DNS '
-          'Zone',
  '.as': 'ActionScript',
  '.asax': 'ASP',
  '.asc': 'AGS '
-         'Script '
-         '/ '
-         'AsciiDoc '
-         '/ '
-         'Public '
-         'Key',
- '.asciidoc': 'AsciiDoc',
+         'Script',
  '.ascx': 'ASP',
  '.asd': 'Common '
          'Lisp',
@@ -70,18 +39,14 @@ EXTENSION_TO_LANG ={
  '.asmx': 'ASP',
  '.asp': 'ASP',
  '.aspx': 'ASP',
- '.asset': 'Unity3D '
-           'Asset',
  '.au3': 'AutoIt',
  '.aug': 'Augeas',
  '.auk': 'Awk',
- '.aux': 'TeX',
  '.aw': 'PHP',
  '.awk': 'Awk',
  '.axd': 'ASP',
  '.axi': 'NetLinx',
  '.axi.erb': 'NetLinx+ERB',
- '.axml': 'XML',
  '.axs': 'NetLinx',
  '.axs.erb': 'NetLinx+ERB',
  '.b': 'Brainfuck '
@@ -95,20 +60,16 @@ EXTENSION_TO_LANG ={
  '.bb': 'BitBake '
         '/ '
         'BlitzBasic',
- '.bbx': 'TeX',
  '.befunge': 'Befunge',
  '.bf': 'Brainfuck '
         '/ '
         'HyPhy',
- '.bib': 'TeX',
  '.bison': 'Bison',
  '.bmx': 'BlitzMax',
  '.bones': 'JavaScript',
  '.boo': 'Boo',
  '.boot': 'Clojure',
- '.brd': 'Eagle '
-         '/ '
-         'KiCad',
+ '.brd': 'KiCad',
  '.bro': 'Bro',
  '.brs': 'Brightscript',
  '.bsv': 'Bluespec',
@@ -116,9 +77,6 @@ EXTENSION_TO_LANG ={
  '.bzl': 'Python',
  '.c': 'C',
  '.c++': 'C++',
- '.c++-objdump': 'Cpp-ObjDump',
- '.c++objdump': 'Cpp-ObjDump',
- '.c-objdump': 'C-ObjDump',
  '.cake': 'C# '
           '/ '
           'CoffeeScript',
@@ -126,15 +84,12 @@ EXTENSION_TO_LANG ={
            'Proto',
  '.cats': 'C',
  '.cbl': 'COBOL',
- '.cbx': 'TeX',
  '.cc': 'C++',
  '.ccp': 'COBOL',
- '.ccxml': 'XML',
  '.cdf': 'Mathematica',
  '.ceylon': 'Ceylon',
  '.cfc': 'ColdFusion '
          'CFC',
- '.cfg': 'INI',
  '.cfm': 'ColdFusion',
  '.cfml': 'ColdFusion',
  '.cgi': 'Perl '
@@ -159,7 +114,6 @@ EXTENSION_TO_LANG ={
         'OpenCL',
  '.cl2': 'Clojure',
  '.click': 'Click',
- '.clixml': 'XML',
  '.clj': 'Clojure',
  '.cljc': 'Clojure',
  '.cljs': 'Clojure',
@@ -171,8 +125,6 @@ EXTENSION_TO_LANG ={
          '/ '
          'OpenEdge '
          'ABL '
-         '/ '
-         'TeX '
          '/ '
          'Visual '
          'Basic',
@@ -193,77 +145,47 @@ EXTENSION_TO_LANG ={
         'Component '
         'Pascal',
  '.cpp': 'C++',
- '.cpp-objdump': 'Cpp-ObjDump',
- '.cppobjdump': 'Cpp-ObjDump',
- '.cproject': 'XML',
  '.cps': 'Component '
          'Pascal',
  '.cpy': 'COBOL',
- '.cql': 'SQL',
  '.cr': 'Crystal',
- '.creole': 'Creole',
  '.cs': 'C# '
         '/ '
         'Smalltalk',
  '.csh': 'Tcsh',
  '.cshtml': 'C#',
- '.csl': 'XML',
  '.cson': 'CoffeeScript',
- '.csproj': 'XML',
- '.css': 'CSS',
- '.csv': 'CSV',
  '.csx': 'C#',
- '.ct': 'XML',
  '.ctp': 'PHP',
  '.cu': 'Cuda',
  '.cuh': 'Cuda',
  '.cw': 'Redcode',
  '.cxx': 'C++',
- '.cxx-objdump': 'Cpp-ObjDump',
  '.cy': 'Cycript',
  '.d': 'D '
        '/ '
        'DTrace '
        '/ '
        'Makefile',
- '.d-objdump': 'D-ObjDump',
- '.darcspatch': 'Darcs '
-                'Patch',
  '.dart': 'Dart',
  '.dats': 'ATS',
  '.db2': 'SQLPL',
  '.dcl': 'Clean',
- '.ddl': 'SQL',
  '.decls': 'BlitzBasic',
- '.desktop': 'desktop',
- '.desktop.in': 'desktop',
  '.dfm': 'Pascal',
  '.di': 'D',
- '.diff': 'Diff',
- '.dita': 'XML',
- '.ditamap': 'XML',
- '.ditaval': 'XML',
  '.djs': 'Dogescript',
- '.dll.config': 'XML',
  '.dlm': 'IDL',
  '.dm': 'DM',
  '.do': 'Stata',
- '.dockerfile': 'Dockerfile',
  '.doh': 'Stata',
- '.dot': 'Graphviz '
-         '(DOT)',
- '.dotsettings': 'XML',
- '.dpatch': 'Darcs '
-            'Patch',
  '.dpr': 'Pascal',
  '.druby': 'Mirah',
- '.dtx': 'TeX',
  '.duby': 'Mirah',
  '.dyalog': 'APL',
  '.dyl': 'Dylan',
  '.dylan': 'Dylan',
  '.e': 'Eiffel',
- '.eam.fs': 'Formatted',
  '.ebuild': 'Gentoo '
             'Ebuild',
  '.ec': 'eC',
@@ -273,8 +195,6 @@ EXTENSION_TO_LANG ={
  '.eclass': 'Gentoo '
             'Eclass',
  '.eclxml': 'ECL',
- '.edn': 'edn',
- '.eex': 'HTML+EEX',
  '.eh': 'eC',
  '.el': 'Emacs '
         'Lisp',
@@ -287,11 +207,6 @@ EXTENSION_TO_LANG ={
  '.emacs.desktop': 'Emacs '
                    'Lisp',
  '.emberscript': 'EmberScript',
- '.epj': 'Ecere '
-         'Projects',
- '.eps': 'PostScript',
- '.erb': 'HTML+ERB',
- '.erb.deface': 'HTML+ERB',
  '.erl': 'Erlang',
  '.es': 'Erlang '
         '/ '
@@ -323,13 +238,10 @@ EXTENSION_TO_LANG ={
           '/ '
           'Shell',
  '.feature': 'Cucumber',
- '.filters': 'XML',
  '.fish': 'fish',
  '.flex': 'JFlex',
  '.flux': 'FLUX',
  '.for': 'FORTRAN '
-         '/ '
-         'Formatted '
          '/ '
          'Forth',
  '.forth': 'Forth',
@@ -337,9 +249,7 @@ EXTENSION_TO_LANG ={
  '.fpp': 'FORTRAN',
  '.fr': 'Forth '
         '/ '
-        'Frege '
-        '/ '
-        'Text',
+        'Frege',
  '.frag': 'GLSL '
           '/ '
           'JavaScript',
@@ -359,7 +269,6 @@ EXTENSION_TO_LANG ={
  '.fsh': 'GLSL',
  '.fshader': 'GLSL',
  '.fsi': 'F#',
- '.fsproj': 'XML',
  '.fsx': 'F#',
  '.fth': 'Forth',
  '.ftl': 'FreeMarker',
@@ -369,39 +278,26 @@ EXTENSION_TO_LANG ={
         '/ '
         'HLSL',
  '.fxh': 'HLSL',
- '.fxml': 'XML',
  '.fy': 'Fancy',
- '.g': 'G-code '
-       '/ '
-       'GAP',
+ '.g': 'GAP',
  '.g4': 'ANTLR',
  '.gap': 'GAP',
  '.gawk': 'Awk',
- '.gco': 'G-code',
- '.gcode': 'G-code',
  '.gd': 'GAP '
         '/ '
         'GDScript',
  '.gemspec': 'Ruby',
  '.geo': 'GLSL',
- '.geojson': 'JSON',
  '.geom': 'GLSL',
  '.gf': 'Grammatical '
         'Framework',
  '.gi': 'GAP',
- '.glade': 'XML',
  '.glf': 'Glyph',
  '.glsl': 'GLSL',
  '.glslv': 'GLSL',
  '.gml': 'Game '
          'Maker '
-         'Language '
-         '/ '
-         'Graph '
-         'Modeling '
-         'Language '
-         '/ '
-         'XML',
+         'Language',
  '.gms': 'GAMS',
  '.gnu': 'Gnuplot',
  '.gnuplot': 'Gnuplot',
@@ -410,11 +306,8 @@ EXTENSION_TO_LANG ={
  '.golo': 'Golo',
  '.gp': 'Gnuplot',
  '.grace': 'Grace',
- '.gradle': 'Gradle',
- '.graphql': 'GraphQL',
  '.groovy': 'Groovy',
  '.grt': 'Groovy',
- '.grxml': 'XML',
  '.gs': 'Gosu '
         '/ '
         'JavaScript',
@@ -425,8 +318,6 @@ EXTENSION_TO_LANG ={
  '.gst': 'Gosu',
  '.gsx': 'Gosu',
  '.gtpl': 'Groovy',
- '.gv': 'Graphviz '
-        '(DOT)',
  '.gvy': 'Groovy',
  '.gyp': 'Python',
  '.h': 'C '
@@ -435,12 +326,8 @@ EXTENSION_TO_LANG ={
        '/ '
        'Objective-C',
  '.h++': 'C++',
- '.haml': 'Haml',
- '.haml.deface': 'Haml',
- '.handlebars': 'Handlebars',
  '.hats': 'ATS',
  '.hb': 'Harbour',
- '.hbs': 'Handlebars',
  '.hcl': 'HCL',
  '.hh': 'C++ '
         '/ '
@@ -454,10 +341,6 @@ EXTENSION_TO_LANG ={
  '.hrl': 'Erlang',
  '.hs': 'Haskell',
  '.hsc': 'Haskell',
- '.htm': 'HTML',
- '.html': 'HTML',
- '.html.hl': 'HTML',
- '.http': 'HTTP',
  '.hx': 'Haxe',
  '.hxsl': 'Haxe',
  '.hxx': 'C++',
@@ -472,12 +355,9 @@ EXTENSION_TO_LANG ={
  '.ijs': 'J',
  '.ik': 'Ioke',
  '.ily': 'LilyPond',
- '.iml': 'XML',
  '.inc': 'Assembly '
          '/ '
          'C++ '
-         '/ '
-         'HTML '
          '/ '
          'PAWN '
          '/ '
@@ -488,36 +368,24 @@ EXTENSION_TO_LANG ={
          '/ '
          'Pascal '
          '/ '
-         'SQL '
-         '/ '
          'SourcePawn',
- '.ini': 'INI',
  '.inl': 'C++',
  '.ino': 'Arduino',
- '.ins': 'TeX',
  '.intr': 'Dylan',
  '.io': 'Io',
  '.ipf': 'IGOR '
          'Pro',
  '.ipp': 'C++',
- '.ipynb': 'Jupyter '
-           'Notebook',
  '.irbrc': 'Ruby',
- '.irclog': 'IRC '
-            'log',
  '.iss': 'Inno '
          'Setup',
- '.ivy': 'XML',
  '.j': 'Jasmin '
        '/ '
        'Objective-J',
- '.jade': 'Jade',
  '.jake': 'JavaScript',
  '.java': 'Java',
  '.jbuilder': 'Ruby',
- '.jelly': 'XML',
  '.jflex': 'JFlex',
- '.jinja': 'HTML+Django',
  '.jl': 'Julia',
  '.jq': 'JSONiq',
  '.js': 'JavaScript',
@@ -525,19 +393,13 @@ EXTENSION_TO_LANG ={
  '.jscad': 'JavaScript',
  '.jsfl': 'JavaScript',
  '.jsm': 'JavaScript',
- '.json': 'JSON',
- '.json5': 'JSON5',
- '.jsonld': 'JSONLD',
  '.jsp': 'Java '
          'Server '
          'Pages',
- '.jsproj': 'XML',
  '.jss': 'JavaScript',
  '.jsx': 'JSX',
  '.kicad_pcb': 'KiCad',
  '.kid': 'Genshi',
- '.kit': 'Kit',
- '.kml': 'XML',
  '.krl': 'KRL',
  '.ksh': 'Shell',
  '.kt': 'Kotlin',
@@ -545,8 +407,6 @@ EXTENSION_TO_LANG ={
  '.kts': 'Kotlin',
  '.l': 'Common '
        'Lisp '
-       '/ '
-       'Groff '
        '/ '
        'Lex '
        '/ '
@@ -557,16 +417,8 @@ EXTENSION_TO_LANG ={
  '.lasso': 'Lasso',
  '.lasso8': 'Lasso',
  '.lasso9': 'Lasso',
- '.latte': 'Latte',
- '.launch': 'XML',
- '.lbx': 'TeX',
- '.ld': 'Linker '
-        'Script',
  '.ldml': 'Lasso',
- '.lds': 'Linker '
-         'Script',
  '.lean': 'Lean',
- '.less': 'Less',
  '.lex': 'Lex',
  '.lfe': 'LFE',
  '.lgt': 'Logtalk',
@@ -574,7 +426,6 @@ EXTENSION_TO_LANG ={
          'Haskell',
  '.lid': 'Dylan',
  '.lidr': 'Idris',
- '.liquid': 'Liquid',
  '.lisp': 'Common '
           'Lisp '
           '/ '
@@ -583,7 +434,6 @@ EXTENSION_TO_LANG ={
                'CoffeeScript',
  '.ll': 'LLVM',
  '.lmi': 'Python',
- '.lock': 'JSON',
  '.logtalk': 'Logtalk',
  '.lol': 'LOLCODE',
  '.lookml': 'LookML',
@@ -597,7 +447,6 @@ EXTENSION_TO_LANG ={
          'Lisp '
          '/ '
          'NewLisp',
- '.ltx': 'TeX',
  '.lua': 'Lua',
  '.lvproj': 'LabVIEW',
  '.ly': 'LilyPond',
@@ -620,12 +469,7 @@ EXTENSION_TO_LANG ={
  '.ma': 'Mathematica',
  '.mak': 'Makefile',
  '.mako': 'Mako',
- '.man': 'Groff',
  '.mao': 'Mako',
- '.markdown': 'Markdown',
- '.mask': 'Mask',
- '.mat': 'Unity3D '
-         'Asset',
  '.mata': 'Stata',
  '.matah': 'Stata',
  '.mathematica': 'Mathematica',
@@ -635,32 +479,18 @@ EXTENSION_TO_LANG ={
  '.maxpat': 'Max',
  '.maxproj': 'Max',
  '.mcr': 'MAXScript',
- '.md': 'Markdown',
- '.mdpolicy': 'XML',
- '.me': 'Groff',
- '.mediawiki': 'MediaWiki',
- '.meta': 'Unity3D '
-          'Asset',
  '.metal': 'Metal',
  '.minid': 'MiniD',
  '.mir': 'Mirah',
  '.mirah': 'Mirah',
  '.mk': 'Makefile',
- '.mkd': 'Markdown',
- '.mkdn': 'Markdown',
- '.mkdown': 'Markdown',
  '.mkfile': 'Makefile',
- '.mkii': 'TeX',
- '.mkiv': 'TeX',
- '.mkvi': 'TeX',
  '.ml': 'OCaml',
  '.ml4': 'OCaml',
  '.mli': 'OCaml',
  '.mll': 'OCaml',
  '.mly': 'OCaml',
- '.mm': 'Objective-C++ '
-        '/ '
-        'XML',
+ '.mm': 'Objective-C++',
  '.mmk': 'Module '
          'Management '
          'System',
@@ -670,13 +500,7 @@ EXTENSION_TO_LANG ={
  '.mo': 'Modelica',
  '.mod': 'AMPL '
          '/ '
-         'Linux '
-         'Kernel '
-         'Module '
-         '/ '
-         'Modula-2 '
-         '/ '
-         'XML',
+         'Modula-2',
  '.monkey': 'Monkey',
  '.moo': 'Mercury '
          '/ '
@@ -684,48 +508,31 @@ EXTENSION_TO_LANG ={
  '.moon': 'MoonScript',
  '.ms': 'GAS '
         '/ '
-        'Groff '
-        '/ '
         'MAXScript',
  '.mspec': 'Ruby',
  '.mss': 'CartoCSS',
  '.mt': 'Mathematica',
- '.mtml': 'MTML',
  '.mu': 'mupad',
  '.muf': 'MUF',
  '.mumps': 'M',
- '.mustache': 'HTML+Django',
- '.mxml': 'XML',
  '.mxt': 'Max',
  '.myt': 'Myghty',
- '.n': 'Groff '
-       '/ '
-       'Nemerle',
+ '.n': 'Nemerle',
  '.nasm': 'Assembly',
  '.nawk': 'Awk',
- '.nb': 'Mathematica '
-        '/ '
-        'Text',
+ '.nb': 'Mathematica',
  '.nbp': 'Mathematica',
  '.nc': 'nesC',
- '.ncl': 'NCL '
-         '/ '
-         'Text',
- '.nginxconf': 'Nginx',
+ '.ncl': 'NCL',
  '.ni': 'Inform '
         '7',
  '.nim': 'Nimrod',
  '.nimrod': 'Nimrod',
- '.ninja': 'Ninja',
  '.nit': 'Nit',
  '.nix': 'Nix',
  '.njs': 'JavaScript',
- '.nl': 'NL '
-        '/ '
-        'NewLisp',
+ '.nl': 'NewLisp',
  '.nlogo': 'NetLogo',
- '.no': 'Text',
- '.nproj': 'XML',
  '.nqp': 'Perl6',
  '.nse': 'Lua',
  '.nsh': 'NSIS',
@@ -734,22 +541,14 @@ EXTENSION_TO_LANG ={
  '.numpy': 'NumPy',
  '.numpyw': 'NumPy',
  '.numsc': 'NumPy',
- '.nuspec': 'XML',
  '.nut': 'Squirrel',
  '.ny': 'Common '
         'Lisp',
- '.objdump': 'ObjDump',
- '.odd': 'XML',
  '.omgrofl': 'Omgrofl',
  '.ooc': 'ooc',
  '.opa': 'Opa',
  '.opal': 'Opal',
  '.opencl': 'OpenCL',
- '.org': 'Org',
- '.osm': 'XML',
- '.owl': 'Web '
-         'Ontology '
-         'Language',
  '.ox': 'Ox',
  '.oxh': 'Ox',
  '.oxo': 'Ox',
@@ -767,7 +566,6 @@ EXTENSION_TO_LANG ={
  '.pasm': 'Parrot '
           'Assembly',
  '.pat': 'Max',
- '.patch': 'Diff',
  '.pb': 'PureBasic',
  '.pbi': 'PureBasic',
  '.pck': 'PLSQL',
@@ -785,14 +583,12 @@ EXTENSION_TO_LANG ={
  '.php5': 'PHP',
  '.phps': 'PHP',
  '.phpt': 'PHP',
- '.phtml': 'HTML+PHP',
  '.pig': 'PigLatin',
  '.pike': 'Pike',
  '.pir': 'Parrot '
          'Internal '
          'Representation',
  '.pkb': 'PLSQL',
- '.pkl': 'Pickle',
  '.pks': 'PLSQL',
  '.pl': 'Perl '
         '/ '
@@ -801,67 +597,42 @@ EXTENSION_TO_LANG ={
         'Prolog',
  '.pl6': 'Perl6',
  '.plb': 'PLSQL',
- '.plist': 'XML',
  '.plot': 'Gnuplot',
  '.pls': 'PLSQL',
  '.plsql': 'PLSQL',
  '.plt': 'Gnuplot',
- '.pluginspec': 'Ruby '
-                '/ '
-                'XML',
+ '.pluginspec': 'Ruby',
  '.plx': 'Perl',
  '.pm': 'Perl '
         '/ '
         'Perl6',
  '.pm6': 'Perl6',
  '.pmod': 'Pike',
- '.po': 'Gettext '
-        'Catalog',
- '.pod': 'Perl '
-         '/ '
-         'Pod',
+ '.pod': 'Perl',
  '.podsl': 'Common '
            'Lisp',
  '.podspec': 'Ruby',
  '.pogo': 'PogoScript',
  '.pony': 'Pony',
- '.pot': 'Gettext '
-         'Catalog',
  '.pov': 'POV-Ray '
          'SDL',
  '.pp': 'Pascal '
         '/ '
         'Puppet',
- '.prc': 'SQL',
- '.prefab': 'Unity3D '
-            'Asset',
- '.prefs': 'INI',
  '.prg': 'xBase',
  '.pri': 'QMake',
  '.pro': 'IDL '
-         '/ '
-         'INI '
          '/ '
          'Prolog '
          '/ '
          'QMake',
  '.prolog': 'Prolog',
- '.properties': 'INI',
- '.props': 'XML',
- '.proto': 'Protocol '
-           'Buffer',
  '.prw': 'xBase',
- '.ps': 'PostScript',
  '.ps1': 'PowerShell',
- '.ps1xml': 'XML',
  '.psc': 'Papyrus',
- '.psc1': 'XML',
  '.psd1': 'PowerShell',
  '.psgi': 'Perl',
  '.psm1': 'PowerShell',
- '.pt': 'XML',
- '.pub': 'Public '
-         'Key',
  '.purs': 'PureScript',
  '.pwn': 'PAWN',
  '.pxd': 'Cython',
@@ -870,8 +641,6 @@ EXTENSION_TO_LANG ={
  '.pyde': 'Python',
  '.pyp': 'Python',
  '.pyt': 'Python',
- '.pytb': 'Python '
-          'traceback',
  '.pyw': 'Python',
  '.pyx': 'Cython',
  '.qbs': 'QML',
@@ -883,10 +652,6 @@ EXTENSION_TO_LANG ={
  '.r3': 'Rebol',
  '.rabl': 'Ruby',
  '.rake': 'Ruby',
- '.raml': 'RAML',
- '.raw': 'Raw '
-         'token '
-         'data',
  '.rb': 'Ruby',
  '.rbbas': 'REALbasic',
  '.rbfrm': 'REALbasic',
@@ -899,17 +664,11 @@ EXTENSION_TO_LANG ={
  '.rbx': 'Ruby',
  '.rbxs': 'Lua',
  '.rd': 'R',
- '.rdf': 'XML',
- '.rdoc': 'RDoc',
  '.reb': 'Rebol',
  '.rebol': 'Rebol',
  '.red': 'Red',
  '.reds': 'Red',
- '.reek': 'YAML',
- '.rest': 'reStructuredText',
- '.rest.txt': 'reStructuredText',
  '.rg': 'Rouge',
- '.rhtml': 'RHTML',
  '.rkt': 'Racket',
  '.rktd': 'Racket',
  '.rktl': 'Racket',
@@ -917,32 +676,22 @@ EXTENSION_TO_LANG ={
         'in '
         'Ruby '
         'Host',
- '.rmd': 'RMarkdown',
- '.rno': 'Groff',
  '.robot': 'RobotFramework',
- '.roff': 'Groff',
- '.ron': 'Markdown',
  '.rpy': 'Python '
          '/ '
          "Ren'Py",
- '.rq': 'SPARQL',
  '.rs': 'RenderScript '
         '/ '
         'Rust',
  '.rs.in': 'Rust',
  '.rsh': 'RenderScript',
- '.rss': 'XML',
- '.rst': 'reStructuredText',
- '.rst.txt': 'reStructuredText',
  '.rsx': 'R',
  '.ru': 'Ruby',
  '.ruby': 'Ruby',
- '.rviz': 'YAML',
  '.s': 'GAS',
  '.sage': 'Sage',
  '.sagews': 'Sage',
  '.sas': 'SAS',
- '.sass': 'Sass',
  '.sats': 'ATS',
  '.sbt': 'Scala',
  '.sc': 'Scala '
@@ -950,18 +699,13 @@ EXTENSION_TO_LANG ={
         'SuperCollider',
  '.scad': 'OpenSCAD',
  '.scala': 'Scala',
- '.scaml': 'Scaml',
  '.scd': 'SuperCollider',
  '.sce': 'Scilab',
- '.sch': 'Eagle '
-         '/ '
-         'KiCad',
+ '.sch': 'KiCad',
  '.sci': 'Scilab',
  '.scm': 'Scheme',
  '.scpt': 'AppleScript',
  '.scrbl': 'Racket',
- '.scss': 'SCSS',
- '.scxml': 'XML',
  '.self': 'Self',
  '.sexp': 'Common '
           'Lisp',
@@ -976,7 +720,6 @@ EXTENSION_TO_LANG ={
  '.sjs': 'JavaScript',
  '.sl': 'Slash',
  '.sld': 'Scheme',
- '.slim': 'Slim',
  '.sls': 'SaltStack '
          '/ '
          'Scheme',
@@ -987,7 +730,6 @@ EXTENSION_TO_LANG ={
  '.smt': 'SMT',
  '.smt2': 'SMT',
  '.sp': 'SourcePawn',
- '.sparql': 'SPARQL',
  '.spin': 'Propeller '
           'Spin',
  '.sps': 'Scheme',
@@ -996,22 +738,12 @@ EXTENSION_TO_LANG ={
          '/ '
          'PLpgSQL '
          '/ '
-         'SQL '
-         '/ '
          'SQLPL',
- '.srdf': 'XML',
  '.ss': 'Scheme',
  '.ssjs': 'JavaScript',
- '.st': 'HTML '
-        '/ '
-        'Smalltalk',
- '.stTheme': 'XML',
+ '.st': 'Smalltalk',
  '.stan': 'Stan',
  '.sthlp': 'Stata',
- '.ston': 'STON',
- '.storyboard': 'XML',
- '.sty': 'TeX',
- '.styl': 'Stylus',
  '.sublime-build': 'JavaScript',
  '.sublime-commands': 'JavaScript',
  '.sublime-completions': 'JavaScript',
@@ -1021,17 +753,13 @@ EXTENSION_TO_LANG ={
  '.sublime-mousemap': 'JavaScript',
  '.sublime-project': 'JavaScript',
  '.sublime-settings': 'JavaScript',
- '.sublime-snippet': 'XML',
- '.sublime-syntax': 'YAML',
  '.sublime-theme': 'JavaScript',
  '.sublime-workspace': 'JavaScript',
  '.sublime_metrics': 'JavaScript',
  '.sublime_session': 'JavaScript',
  '.sv': 'SystemVerilog',
- '.svg': 'SVG',
  '.svh': 'SystemVerilog',
  '.swift': 'Swift',
- '.syntax': 'YAML',
  '.t': 'Perl '
        '/ '
        'Perl6 '
@@ -1039,60 +767,33 @@ EXTENSION_TO_LANG ={
        'Terra '
        '/ '
        'Turing',
- '.tab': 'SQL',
  '.tac': 'Python',
- '.targets': 'XML',
  '.tcc': 'C++',
  '.tcl': 'Tcl',
  '.tcsh': 'Tcsh',
- '.tea': 'Tea',
- '.tex': 'TeX',
- '.textile': 'Textile',
  '.tf': 'HCL',
  '.thor': 'Ruby',
  '.thrift': 'Thrift',
  '.thy': 'Isabelle',
  '.tm': 'Tcl',
- '.tmCommand': 'XML',
- '.tmLanguage': 'XML',
- '.tmPreferences': 'XML',
- '.tmSnippet': 'XML',
- '.tmTheme': 'XML',
- '.tml': 'XML',
  '.tmux': 'Shell',
- '.toc': 'TeX',
- '.toml': 'TOML',
  '.tool': 'Shell',
- '.topojson': 'JSON',
  '.tpl': 'Smarty',
  '.tpp': 'C++',
- '.ts': 'TypeScript '
-        '/ '
-        'XML',
+ '.ts': 'TypeScript',
  '.tst': 'GAP '
          '/ '
          'Scilab',
- '.tsx': 'TypeScript '
-         '/ '
-         'XML',
- '.ttl': 'Turtle',
+ '.tsx': 'TypeScript',
  '.tu': 'Turing',
- '.twig': 'Twig',
  '.txl': 'TXL',
- '.txt': 'Text',
  '.uc': 'UnrealScript',
- '.udf': 'SQL',
- '.ui': 'XML',
- '.unity': 'Unity3D '
-           'Asset',
  '.uno': 'Uno',
  '.upc': 'Unified '
          'Parallel '
          'C',
  '.ur': 'UrWeb',
- '.urdf': 'XML',
  '.urs': 'UrWeb',
- '.ux': 'XML',
  '.v': 'Coq '
        '/ '
        'Verilog',
@@ -1105,11 +806,9 @@ EXTENSION_TO_LANG ={
          'Basic',
  '.vbhtml': 'Visual '
             'Basic',
- '.vbproj': 'XML',
  '.vbs': 'Visual '
          'Basic',
  '.vcl': 'VCL',
- '.vcxproj': 'XML',
  '.veo': 'Verilog',
  '.vert': 'GLSL',
  '.vh': 'SystemVerilog',
@@ -1118,53 +817,27 @@ EXTENSION_TO_LANG ={
  '.vhf': 'VHDL',
  '.vhi': 'VHDL',
  '.vho': 'VHDL',
- '.vhost': 'ApacheConf '
-           '/ '
-           'Nginx',
  '.vhs': 'VHDL',
  '.vht': 'VHDL',
  '.vhw': 'VHDL',
  '.vim': 'VimL',
- '.viw': 'SQL',
  '.volt': 'Volt',
  '.vrx': 'GLSL',
  '.vsh': 'GLSL',
  '.vshader': 'GLSL',
- '.vssettings': 'XML',
- '.vue': 'Vue',
- '.vxml': 'XML',
  '.w': 'C',
  '.watchr': 'Ruby',
  '.webidl': 'WebIDL',
- '.weechatlog': 'IRC '
-                'log',
- '.wiki': 'MediaWiki',
  '.wisp': 'wisp',
  '.wl': 'Mathematica',
  '.wlt': 'Mathematica',
  '.wlua': 'Lua',
- '.wsdl': 'XML',
- '.wsf': 'XML',
  '.wsgi': 'Python',
- '.wxi': 'XML',
- '.wxl': 'XML',
- '.wxs': 'XML',
  '.x': 'Logos',
  '.x10': 'X10',
- '.x3d': 'XML',
- '.xacro': 'XML',
- '.xaml': 'XML',
  '.xc': 'XC',
- '.xht': 'HTML',
- '.xhtml': 'HTML',
  '.xi': 'Logos',
- '.xib': 'XML',
- '.xlf': 'XML',
- '.xliff': 'XML',
  '.xm': 'Logos',
- '.xmi': 'XML',
- '.xml': 'XML',
- '.xml.dist': 'XML',
  '.xojo_code': 'Xojo',
  '.xojo_menu': 'Xojo',
  '.xojo_report': 'Xojo',
@@ -1173,7 +846,6 @@ EXTENSION_TO_LANG ={
  '.xojo_window': 'Xojo',
  '.xpl': 'XProc',
  '.xproc': 'XProc',
- '.xproj': 'XML',
  '.xpy': 'Python',
  '.xq': 'XQuery',
  '.xql': 'XQuery',
@@ -1182,7 +854,6 @@ EXTENSION_TO_LANG ={
  '.xqy': 'XQuery',
  '.xrl': 'Erlang',
  '.xs': 'XS',
- '.xsd': 'XML',
  '.xsjs': 'JavaScript',
  '.xsjslib': 'JavaScript',
  '.xsl': 'XSLT',
@@ -1190,21 +861,13 @@ EXTENSION_TO_LANG ={
  '.xsp-config': 'XPages',
  '.xsp.metadata': 'XPages',
  '.xtend': 'Xtend',
- '.xul': 'XML',
  '.y': 'Yacc',
  '.yacc': 'Yacc',
- '.yaml': 'YAML',
- '.yaml-tmlanguage': 'YAML',
- '.yang': 'YANG',
  '.yap': 'Prolog',
- '.yml': 'YAML',
  '.yrl': 'Erlang',
  '.yy': 'Yacc',
- '.zcml': 'XML',
  '.zep': 'Zephir',
  '.zimpl': 'Zimpl',
  '.zmpl': 'Zimpl',
- '.zone': 'DNS '
-          'Zone',
  '.zpl': 'Zimpl',
  '.zsh': 'Shell'}
