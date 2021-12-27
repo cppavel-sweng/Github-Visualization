@@ -48,12 +48,26 @@
       </header>
 
       <div class="w-50 mx-auto offset-md-2">
-        <form method="POST">
-            <div class="form-group">
-              <input type="text" name = "handle" class="form-control" id="handle" placeholder="Enter user's github handle">
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-          </form>
+        <script>
+          function ask_compute(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    document.getElementById("your_task_id").innerHTML =
+                    this.responseText;}
+            };
+            xhttp.open("GET", "compute_data/" + document.getElementById("handle").value, true);
+            xhttp.send();
+          }
+        </script>
+        
+          <div class="form-group">
+            <input type="text" name = "handle" class="form-control" id="handle" placeholder="Enter user's github handle">
+          </div>
+          <button type="buttton" onclick="ask_compute()" class="btn btn-primary mt-3">Submit</button>
+          
+          <p class="text-center fw-bold" id="your_task_id"></p>
       </div>
    
 
