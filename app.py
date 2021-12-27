@@ -21,13 +21,18 @@ def github_gathering(developer_handle):
 
     db = client["developer_db"]
     developer_data = db.developer_data.find_one({"handle": developer_handle})
-    g = GithubData()
+    g = GithubData(task_id)
     g_table[task_id] = g
     
     if not developer_data:
-        developer_basic_details = g.get_basic_account_info(developer_handle)
-        developer_detailed_data = g.get_detailed_data(developer_handle)
-        developer_issues_data = g.search_issues(developer_handle)
+
+        try:
+            developer_basic_details = g.get_basic_account_info(developer_handle)
+            developer_detailed_data = g.get_detailed_data(developer_handle)
+            developer_issues_data = g.search_issues(developer_handle)
+        except Exception as e:
+            print(e)
+            g.message = "Failed"
 
         mydb = client["developer_db"]
         collection = mydb["developer_data"]
@@ -49,17 +54,26 @@ def github_gathering(developer_handle):
         print(developer_issues_data)
 
     else:
+        print("already in database")
         g.message = "Completed"
 
 @app.route('/')
 def main_page():
     return render_template('index.html')
 
+@app.route('/drop_developer_database')
+def drop_developer_db():
+    global client 
+    db = client["developer_db"]
+    collection = db["developer_data"]
+    collection.drop()
 
-@app.route('/progress/<task_id>')
-def progress(task_id):
+    return "<h1>Successfully dropped the database</h1>"
+
+@app.route('/progress/<taskid>')
+def progress(taskid):
     global g_table
-    return f"{g_table[task_id].message}"
+    return f"{g_table[int(taskid)].message}"
 
 
 @app.route('/compute_data/<handle>')

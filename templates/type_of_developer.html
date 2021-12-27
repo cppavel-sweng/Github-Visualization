@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Type of Developer</title>
   </head>
   <body>
@@ -37,9 +37,6 @@
                 <li class="nav-item">
                   <a class="nav-link" href="../top-developers-for-a-repo">Top developers for a repo</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../hiring-system">Hiring system</a>
-                </li>
               </ul>
             </div>
           </div>
@@ -50,25 +47,53 @@
       <div class="w-50 mx-auto offset-md-2">
         <script>
           function ask_compute(){
+            function check_progress(task_id) {
+
+              console.log("Check progress called");
+              function worker() {
+                console.log("Worker called");
+                $.get('progress/' + task_id, function(data) {
+                      console.log("Progress data received");
+                      document.getElementById("progress_of_task").innerHTML = data;
+                      if (data !=="Completed" && data !=="Failed") {
+                        console.log(data);
+                        setTimeout(worker, 1000);
+                      }
+                });
+              }
+              setTimeout(worker, 1000);
+            };
+
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
                     document.getElementById("your_task_id").innerHTML =
-                    this.responseText;}
+                    "Your computation id is: " + this.responseText;
+                    check_progress(this.responseText);
+                  }
             };
             xhttp.open("GET", "compute_data/" + document.getElementById("handle").value, true);
             xhttp.send();
-          }
+          };
+ 
         </script>
-        
+
+        <script>
+          function show_visualization(){
+            window.open("type-of-developer/" + document.getElementById("handle").value, '_blank').focus();
+          };
+        </script>
           <div class="form-group">
             <input type="text" name = "handle" class="form-control" id="handle" placeholder="Enter user's github handle">
           </div>
-          <button type="buttton" onclick="ask_compute()" class="btn btn-primary mt-3">Submit</button>
-          
+          <button type="button" id="start_computation" onclick="ask_compute()" class="btn btn-primary mt-3">Start computation for the user</button>
+          <button type="button" id="show_visualization" onclick="show_visualization()" class="btn btn-primary mt-3">Show visualization for the user</button>
+          <br/>
           <p class="text-center fw-bold" id="your_task_id"></p>
+          <p class="text-center fw-bold" id="progress_of_task"></p>
       </div>
+
    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
