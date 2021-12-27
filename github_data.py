@@ -90,7 +90,7 @@ class GithubData:
         number_of_pr_created = len(pr_author)
         number_of_pr_assigned = len(pr_assignee)
 
-        self.message = f"{self.task_id}: Issues data received"
+        self.message = f"{self.task_id}: Issues data received ({user_name})"
 
         time_between_issues_created = []
 
@@ -99,7 +99,7 @@ class GithubData:
             second_ts = issue_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
             difference = - (second_ts - first_ts)/3600 
             time_between_issues_created.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_author) - 1} times between issues created"
+            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_author) - 1} times between issues created ({user_name})"
 
         time_between_issues_assigned = []
 
@@ -108,7 +108,7 @@ class GithubData:
             second_ts = issue_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
             difference = - (second_ts - first_ts)/3600 
             time_between_issues_assigned.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_assignee) - 1} times between issues assigned"
+            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_assignee) - 1} times between issues assigned ({user_name})"
 
         time_between_pr_created = []
 
@@ -117,7 +117,7 @@ class GithubData:
             second_ts = pr_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
             difference = - (second_ts - first_ts)/3600 
             time_between_pr_created.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_author) - 1} times between pr created"
+            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_author) - 1} times between pr created ({user_name})"
 
         time_between_pr_assigned = []
 
@@ -126,7 +126,7 @@ class GithubData:
             second_ts = pr_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
             difference = - (second_ts - first_ts)/3600 
             time_between_pr_assigned.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_assignee) - 1} times between pr assigned"
+            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_assignee) - 1} times between pr assigned ({user_name})"
 
 
         #how many issues assigned to the person were closed by them
@@ -187,7 +187,7 @@ class GithubData:
         else:
             average_number_of_comments_in_issues_created = None
 
-        self.message = f"{self.task_id}: Done with averages and other summary measures for issues data"
+        self.message = f"{self.task_id}: Done with averages and other summary measures for issues data ({user_name})"
 
         return {
             "issues_created": number_of_issues_created,
@@ -214,7 +214,7 @@ class GithubData:
         for commit in commits:
             commits_list.append(commit)
 
-        self.message = f"{self.task_id}: Received commits"
+        self.message = f"{self.task_id}: Received commits ({user_name})"
 
         repos = []
         languages = {}
@@ -243,7 +243,7 @@ class GithubData:
                         languages[language] = file.additions + file.deletions
             
             index = index + 1
-            self.message = f"{self.task_id}: Done with {index}/{len(commits_list)} commits"
+            self.message = f"{self.task_id}: Done with {index}/{len(commits_list)} commits ({user_name})"
 
         sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
 
@@ -260,7 +260,7 @@ class GithubData:
                         commits_list[index+1].commit.committer.date).total_seconds()/3600)
             )
             average_time_between_commits = average_time_between_commits + differences[-1]
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(commits_list) - 1} differences"
+            self.message = f"{self.task_id}: Done with {index + 1}/{len(commits_list) - 1} differences ({user_name})"
 
 
         if len(differences) == 0:
@@ -295,7 +295,7 @@ class GithubData:
     def get_basic_account_info(self, user_name):
         user = self.g.get_user(user_name)
 
-        self.message =f"{self.task_id}: Done with basic info"
+        self.message =f"{self.task_id}: Done with basic info ({user_name})"
 
         return {
             "bio": user.bio or "Bio not specified",

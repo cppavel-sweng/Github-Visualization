@@ -32,7 +32,7 @@ def github_gathering(developer_handle):
             developer_issues_data = g.search_issues(developer_handle)
         except Exception as e:
             print(e)
-            g.message = "Failed"
+            g.message = f"Failed: (task_id:{g.task_id}, handle: {developer_handle}). \n {e}"
 
         mydb = client["developer_db"]
         collection = mydb["developer_data"]
@@ -47,7 +47,7 @@ def github_gathering(developer_handle):
 
         collection.insert_one(developer_data)
 
-        g.message = "Completed"
+        g.message = f"Completed, stored in DB (task_id:{g.task_id}, handle: {developer_handle})."
 
         print(developer_basic_details)
         print(developer_detailed_data)
@@ -55,7 +55,7 @@ def github_gathering(developer_handle):
 
     else:
         print("already in database")
-        g.message = "Completed"
+        g.message = g.message = f"Completed, already in DB (task_id:{g.task_id}, handle: {developer_handle})"
 
 @app.route('/')
 def main_page():
@@ -112,7 +112,10 @@ def type_of_developer_result(handle):
             developer_issues_data=developer_issues_data
         )
     else:
-        return f"<h1>Sorry, no data found for such developer: {handle}</h1>"
+        return (f"<h1>Sorry, no data found for such developer: {handle}.<br/>"
+                 f"Consider starting the computation for {handle} on the previous page.<br/>"
+                 f"After the computation is completed you will be able to see the"
+                 f"visualization.</h1>")
 
 @app.route('/top-developers-for-a-repo')
 def top_developers_for_a_repo():

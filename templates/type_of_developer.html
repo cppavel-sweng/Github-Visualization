@@ -37,13 +37,24 @@
                 <li class="nav-item">
                   <a class="nav-link" href="../top-developers-for-a-repo">Top developers for a repo</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../drop_developer_database">Drop developer database</a>
+                </li>
               </ul>
             </div>
           </div>
         </nav>
         <!-- Navbar -->
       </header>
-
+      <ul class="list-group">
+        <li class="list-group-item">Click "start computation" and wait before it is completed.</li>
+        <li class="list-group-item">Click "show visualization" to see the result.</li>
+        <li class="list-group-item">If your github token is personal, you may sometimes exceed the API rate. Please wait for a few minutes in this case.</li>
+        <li class="list-group-item">The results are cached in the database, so you do not have to rerun the computation, if it was already completed. </li>
+        <li class="list-group-item">If something goes wrong, navigate to "Drop developer database" page to reset.</li>
+        <li class="list-group-item">You may start computation for multiple users, the progress will be shown for both of them, but the progress messages will be alternating between the different computations.</li>
+      </ul>
+      <br/>
       <div class="w-50 mx-auto offset-md-2">
         <script>
           function ask_compute(){
@@ -55,7 +66,7 @@
                 $.get('progress/' + task_id, function(data) {
                       console.log("Progress data received");
                       document.getElementById("progress_of_task").innerHTML = data;
-                      if (data !=="Completed" && data !=="Failed") {
+                      if (data.substring(0,9) !=="Completed" && data.substring(0,6) !=="Failed") {
                         console.log(data);
                         setTimeout(worker, 1000);
                       }
@@ -90,8 +101,8 @@
           <button type="button" id="start_computation" onclick="ask_compute()" class="btn btn-primary mt-3">Start computation for the user</button>
           <button type="button" id="show_visualization" onclick="show_visualization()" class="btn btn-primary mt-3">Show visualization for the user</button>
           <br/>
-          <p class="text-center fw-bold" id="your_task_id"></p>
-          <p class="text-center fw-bold" id="progress_of_task"></p>
+          <p class="text-center fw-bold" id="your_task_id">You will see the most recent computation task id here.</p>
+          <p class="text-center fw-bold" id="progress_of_task">You will see the progress messages here.</p>
       </div>
 
    
