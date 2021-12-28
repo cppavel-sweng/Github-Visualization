@@ -8,7 +8,7 @@ import os
 class GithubData:
 
     def __init__(self, task_id):
-        self.message = f"{task_id}: Idling"
+        self.message = f"{task_id}: Working..."
         self.task_id = task_id
         self.g = Github(os.environ["GITHUB_TOKEN"])
 
@@ -211,6 +211,7 @@ class GithubData:
             Gets detailed data about the user contributions by looking at the most recent commits.
         """
 
+        self.message = "Waiting for all commits to be received"
         commits_list = self.convert_paginated_list_into_regular_list(self.g.search_commits(
             f"author:{user_name}", sort='committer-date', order='desc'))
 
