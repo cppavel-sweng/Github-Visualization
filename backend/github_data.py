@@ -12,10 +12,17 @@ class GithubData:
         self.task_id = task_id
         self.g = Github(os.environ["GITHUB_TOKEN"])
 
-
     def convert_to_histogram(self, list, bins, percentile_to_keep):
-        negative_errors = []
+        """
+            Converts an array into histogram with labels.
 
+            Args:
+                list: the array
+                bins: number of columns desired
+                percentile_to_keep: percentile at which the distribution is cut 
+        """
+
+        negative_errors = []
         sorted_list = sorted(list)
 
         if len(sorted_list) == 0:
@@ -27,9 +34,7 @@ class GithubData:
             return [[0],["No data"]]
 
         max_value = sorted_list[-1]
-
         step = max_value/bins
-
         histogram = [0]*(bins)
 
         for element in sorted_list:
@@ -50,91 +55,61 @@ class GithubData:
         print(f"Negative errors: {negative_errors}")
         return [histogram, labels]
 
-
     def extract_repo_name(self, commit_url):
+        """Simple regex to extract repo name out of the link."""
         pattern = re.compile("https://api.github.com/repos/(.*)/git/")
         match = pattern.search(commit_url).group(1)
         return match 
 
+    def convert_paginated_list_into_regular_list(self, paginated_list):
+        """
+            Converts paginated lists returned by pygithub into regular lists to
+            be able to assume that the length of the list is going to be constant.
+        """
 
-    def search_issues(self, user_name):
+        result = []
+        for item in paginated_list:
+            result.append(item)
 
-        issue_author_paginated = self.g.search_issues(f"author:{user_name} is:issue", sort='created', order='desc')
-        issue_assignee_paginated = self.g.search_issues(f"assignee:{user_name} is:issue", sort='created', order='desc')
-        pr_author_paginated = self.g.search_issues(f"author:{user_name} is:pr", sort='created', order='desc')
-        pr_assignee_paginated = self.g.search_issues(f"assignee:{user_name} is:pr", sort='created', order='desc')
+        return result
 
-        issue_author = []
+    def compute_time_between_consequtive_issues(self, issues, label_for_output, user_name):
+        """
+            Assumes issues are sorted in reverse chronological order, returns list of times
+            between consequtive issues (created or assigned).
 
-        for issue in issue_author_paginated:
-            issue_author.append(issue)
+            Args:
+                issues: regular list of issues
+                label_for_output: information for updating the progress message
+                user_name: required to make progress messsage more specific
+        """
+        time_between_issues = []
 
-        issue_assignee = []
-
-        for issue in issue_assignee_paginated:
-            issue_assignee.append(issue)
-
-        pr_author = []
-
-        for pr in pr_author_paginated:
-            pr_author.append(pr)
-
-        pr_assignee = []
-
-        for pr in pr_assignee_paginated:
-            pr_assignee.append(pr)
+        for index in range(0, len(issues) - 1):
+            first_ts = issues[index].created_at.replace(tzinfo=timezone.utc).timestamp()
+            second_ts = issues[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
+            difference = (first_ts - second_ts)/3600 
+            time_between_issues.append(difference)
+            self.message = (f"{self.task_id}: Done with {index + 1}/{len(issues) - 1} {label_for_output} "
+                            f"({user_name})")
         
+        return time_between_issues
 
-        number_of_issues_created = len(issue_author)
-        number_of_issues_assigned = len(issue_assignee)
-        number_of_pr_created = len(pr_author)
-        number_of_pr_assigned = len(pr_assignee)
+    def find_number_of_closed_assigned_issues(self, issues, user_name):
+        """
+            Finds how many issues assigned to the user were closed by them.
 
-        self.message = f"{self.task_id}: Issues data received ({user_name})"
+            Args:
+                issues: regular list of issues or prs
+                user_name: GitHub user name
 
-        time_between_issues_created = []
-
-        for index in range(0, len(issue_author) - 1):
-            first_ts = issue_author[index].created_at.replace(tzinfo=timezone.utc).timestamp()
-            second_ts = issue_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
-            difference = - (second_ts - first_ts)/3600 
-            time_between_issues_created.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_author) - 1} times between issues created ({user_name})"
-
-        time_between_issues_assigned = []
-
-        for index in range(0, len(issue_assignee) - 1):
-            first_ts = issue_assignee[index].created_at.replace(tzinfo=timezone.utc).timestamp()
-            second_ts = issue_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
-            difference = - (second_ts - first_ts)/3600 
-            time_between_issues_assigned.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(issue_assignee) - 1} times between issues assigned ({user_name})"
-
-        time_between_pr_created = []
-
-        for index in range(0, len(pr_author) - 1):
-            first_ts = pr_author[index].created_at.replace(tzinfo=timezone.utc).timestamp()
-            second_ts = pr_author[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
-            difference = - (second_ts - first_ts)/3600 
-            time_between_pr_created.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_author) - 1} times between pr created ({user_name})"
-
-        time_between_pr_assigned = []
-
-        for index in range(0, len(pr_assignee) - 1):
-            first_ts = pr_assignee[index].created_at.replace(tzinfo=timezone.utc).timestamp()
-            second_ts = pr_assignee[index + 1].created_at.replace(tzinfo=timezone.utc).timestamp()
-            difference = - (second_ts - first_ts)/3600 
-            time_between_pr_assigned.append(difference)
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(pr_assignee) - 1} times between pr assigned ({user_name})"
-
-
-        #how many issues assigned to the person were closed by them
+            Returns a tuple (number of closed assigned issues, average time to close issue)
+        """
 
         count_closed = 0
         average_time_to_close_issue = 0
 
-        for issue in issue_assignee:
+        for issue in issues:
             
             if issue.closed_by:
                 if user_name == issue.closed_by.login:
@@ -144,53 +119,76 @@ class GithubData:
                     issue.closed_at.replace(tzinfo=timezone.utc).timestamp() - 
                     issue.created_at.replace(tzinfo=timezone.utc).timestamp())
 
-
         if count_closed > 0:
             average_time_to_close_issue = average_time_to_close_issue/(count_closed * 3600)
             average_time_to_close_issue = round(average_time_to_close_issue, 1)
         else:
             average_time_to_close_issue = None
 
-        issues_assinged_closed = count_closed
+        return (count_closed, average_time_to_close_issue)
 
-        count_closed = 0
-        average_time_to_review_pr = 0 
 
-        for pr in pr_assignee:
-            if pr.closed_by:
-                if user_name == pr.closed_by.login:
-                    count_closed = count_closed + 1
-
-                average_time_to_review_pr = (average_time_to_review_pr + 
-                    pr.closed_at.replace(tzinfo=timezone.utc).timestamp() - 
-                    pr.created_at.replace(tzinfo=timezone.utc).timestamp())
-
-        pr_assigned_closed = count_closed
-
-        if count_closed > 0:
-            average_time_to_review_pr = average_time_to_review_pr/(count_closed * 3600)
-            average_time_to_review_pr = round(average_time_to_review_pr, 1)
-        else:
-            average_time_to_review_pr = None
-
-        #how many comments did issues created by the user had on average (how impactful they were)
-        #as discussions are the most important part
+    def find_average_number_of_comments_in_issues_created(self, issues, prs):
+        """
+            Finds average number of comments in issues and prs the user created.
+            The idea of the metric is showing how user's contributions provoke 
+            discussions, which are an important part of development cycle.
+        """
 
         average_comments = 0
 
-        for issue in issue_author:
+        for issue in issues:
             average_comments = average_comments + issue.comments
         
-        for pr in pr_author:
+        for pr in prs:
             average_comments = average_comments + pr.comments
 
-        if number_of_issues_created + number_of_pr_created > 0:
-            average_number_of_comments_in_issues_created = average_comments/(number_of_issues_created + number_of_pr_created)
+        if len(issues) + len(prs) > 0:
+            average_number_of_comments_in_issues_created = average_comments/(len(issues) + len(prs))
             average_number_of_comments_in_issues_created = round(average_number_of_comments_in_issues_created,1)    
         else:
             average_number_of_comments_in_issues_created = None
 
-        self.message = f"{self.task_id}: Done with averages and other summary measures for issues data ({user_name})"
+        return average_number_of_comments_in_issues_created
+
+
+    def search_issues(self, user_name):
+
+        issue_author = self.convert_paginated_list_into_regular_list(
+            self.g.search_issues(f"author:{user_name} is:issue", sort='created', order='desc'))
+        issue_assignee = self.convert_paginated_list_into_regular_list(
+            self.g.search_issues(f"assignee:{user_name} is:issue", sort='created', order='desc'))
+        pr_author = self.convert_paginated_list_into_regular_list(
+            self.g.search_issues(f"author:{user_name} is:pr", sort='created', order='desc'))
+        pr_assignee = self.convert_paginated_list_into_regular_list(
+            self.g.search_issues(f"assignee:{user_name} is:pr", sort='created', order='desc'))
+
+        number_of_issues_created = len(issue_author)
+        number_of_issues_assigned = len(issue_assignee)
+        number_of_pr_created = len(pr_author)
+        number_of_pr_assigned = len(pr_assignee)
+
+        self.message = f"{self.task_id}: Issues data received ({user_name})"
+
+        time_between_issues_created = self.compute_time_between_consequtive_issues(
+            issue_author,"times between issues created", user_name)
+        time_between_issues_assigned = self.compute_time_between_consequtive_issues(
+            issue_assignee,"times between issues assigned", user_name)
+        time_between_pr_created = self.compute_time_between_consequtive_issues(
+            pr_author,"times between pr created", user_name)
+        time_between_pr_assigned = self.compute_time_between_consequtive_issues(
+            pr_assignee,"times between pr assigned", user_name)
+
+        
+        issues_assigned_closed, average_time_to_close_issue = self.find_number_of_closed_assigned_issues(
+            issue_assignee)
+        pr_assigned_closed, average_time_to_review_pr = self.find_number_of_closed_assigned_issues(pr_assignee)
+
+        average_number_of_comments_in_issues_created = self.find_average_number_of_comments_in_issues_created(
+            issue_author, pr_author)
+
+        self.message = (f"{self.task_id}: Done with averages and other summary measures "
+                        f"for issues data ({user_name})")
 
         return {
             "issues_created": number_of_issues_created,
@@ -201,21 +199,20 @@ class GithubData:
             "time_between_i_a": self.convert_to_histogram(time_between_issues_assigned, 10, 1),
             "time_between_pr_c": self.convert_to_histogram(time_between_pr_created, 10, 1),
             "time_between_pr_a": self.convert_to_histogram(time_between_pr_assigned, 10, 1),
-            "issues_assigned_closed": issues_assinged_closed,
+            "issues_assigned_closed": issues_assigned_closed,
             "pr_assigned_closed": pr_assigned_closed,
             "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created or "N/A",
             "avg_time_to_close_issue": average_time_to_close_issue or "N/A",
             "avg_time_to_review_pr": average_time_to_review_pr or "N/A"
-
         }
 
     def get_detailed_data(self, user_name):
-        commits = self.g.search_commits(f"author:{user_name}", sort='committer-date', order='desc')
+        """
+            Gets detailed data about the user contributions by looking at the most recent commits.
+        """
 
-        commits_list = []
-
-        for commit in commits:
-            commits_list.append(commit)
+        commits_list = self.convert_paginated_list_into_regular_list(self.g.search_commits(
+            f"author:{user_name}", sort='committer-date', order='desc'))
 
         self.message = f"{self.task_id}: Received commits ({user_name})"
 
@@ -224,7 +221,6 @@ class GithubData:
 
         changes = []
         average_change_size = 0
-
         index = 0
 
         for commit in commits_list:
@@ -270,7 +266,8 @@ class GithubData:
                         commits_list[index+1].commit.committer.date).total_seconds()/3600)
             )
             average_time_between_commits = average_time_between_commits + differences[-1]
-            self.message = f"{self.task_id}: Done with {index + 1}/{len(commits_list) - 1} differences ({user_name})"
+            self.message = (f"{self.task_id}: Done with {index + 1}/{len(commits_list) - 1} "
+                            f"differences ({user_name})")
 
 
         if len(differences) == 0:
@@ -319,21 +316,7 @@ class GithubData:
             "location": user.location or "Not specified",
             "name": user.name or "Not specified",
             "login": user.login,
-            "private_repos_owned": user.owned_private_repos or "Hidden",
             "updated_at": str(user.updated_at.date()) or "Hidden",
             "url": user.url,
-            "team_count": user.team_count or "Hidden",
             "avatar_url": user.avatar_url
         }
-
-
-    
-if __name__ == "__main__":
-    gd = GithubData()
-    test_dd = gd.get_detailed_data("cppavel-sweng")
-    test_di = gd.search_issues("cppavel-sweng")
-    test_bi = gd.get_basic_account_info("cppavel-sweng")
-    print("\n\n\n\n\n\n\n\n")
-    print(test_bi)
-    print(test_dd)
-    print(test_di)

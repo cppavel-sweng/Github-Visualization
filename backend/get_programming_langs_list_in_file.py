@@ -1,3 +1,13 @@
+"""
+   Script to map file extensions with the programming languages.
+   Produces a dictionary in "file_out.txt", which can be copy pasted in python code
+"""
+import pprint
+
+
+"""
+   Data taken from https://gist.github.com/ppisarczyk/43962d06686722d26d176fad46879d41.
+"""
 data = [
    {
       "name":"ABAP",
@@ -3376,6 +3386,7 @@ data = [
    }
 ]
 
+
 result = {}
 for element in data:
     if "extensions" in element and "type" in element:
@@ -3391,8 +3402,6 @@ for element in data:
                 result[extension] = name
             else:
                 result[extension] = result[extension] + " / " + name
-import pprint
-
 
 with open("file_out.txt", "w") as fout:
     fout.write(pprint.pformat(result,width=1))

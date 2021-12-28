@@ -1,3 +1,5 @@
+"""Mapping file extension to programming languages."""
+
 EXTENSION_TO_LANG ={
  '.4th': 'Forth',
  '.6pl': 'Perl6',

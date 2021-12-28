@@ -4,10 +4,13 @@ from threading import Thread
 from pymongo import MongoClient
 from github_data import GithubData
 
+
 app = Flask(__name__)
+
 
 task_id = 0
 g_table = {}
+
 
 client = MongoClient(host='test_mongodb',
                         port=27017, 
@@ -15,7 +18,10 @@ client = MongoClient(host='test_mongodb',
                         password='pass',
                     authSource="admin")
 
+
 def github_gathering(developer_handle):
+    """Gather basic information, commits, changes, issues, PRs and associated metrics."""
+    
     global task_id 
     global client
 
@@ -57,9 +63,11 @@ def github_gathering(developer_handle):
         print("already in database")
         g.message = g.message = f"Completed, already in DB (task_id:{g.task_id}, handle: {developer_handle})"
 
+
 @app.route('/')
 def main_page():
     return render_template('index.html')
+
 
 @app.route('/drop_developer_database')
 def drop_developer_db():
@@ -69,6 +77,7 @@ def drop_developer_db():
     collection.drop()
 
     return "<h1>Successfully dropped the database</h1>"
+
 
 @app.route('/progress/<taskid>')
 def progress(taskid):
@@ -117,9 +126,11 @@ def type_of_developer_result(handle):
                  f"After the computation is completed you will be able to see the "
                  f"visualization.</h1>")
 
+
 @app.route('/top-developers-for-a-repo')
 def top_developers_for_a_repo():
     return render_template('top_developers_for_a_repo.html')
+
 
 if __name__=='__main__':
     app.run(host="0.0.0.0", port=5000)
