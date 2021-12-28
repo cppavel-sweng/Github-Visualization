@@ -181,8 +181,8 @@ class GithubData:
 
         
         issues_assigned_closed, average_time_to_close_issue = self.find_number_of_closed_assigned_issues(
-            issue_assignee)
-        pr_assigned_closed, average_time_to_review_pr = self.find_number_of_closed_assigned_issues(pr_assignee)
+            issue_assignee, user_name)
+        pr_assigned_closed, average_time_to_review_pr = self.find_number_of_closed_assigned_issues(pr_assignee, user_name)
 
         average_number_of_comments_in_issues_created = self.find_average_number_of_comments_in_issues_created(
             issue_author, pr_author)
