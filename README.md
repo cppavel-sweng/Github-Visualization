@@ -19,7 +19,7 @@ For example, a developer may have a lot of contributions in C++ and a lot of pul
 
 ### Example report and Video Demo
 
-![Example top section of the report](https://github.com/cppavel-sweng/Github-Visualization/tree/main/images).
+![Example top section of the report](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_top_section.png).
 
 ### Metrics explanation 
 
