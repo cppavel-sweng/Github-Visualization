@@ -19,12 +19,12 @@ class GithubData:
         sorted_list = sorted(list)
 
         if len(sorted_list) == 0:
-            return [[1],["No data"]]
+            return [[0],["No data"]]
 
         sorted_list = sorted_list[0: int(percentile_to_keep*len(sorted_list))]
 
         if len(sorted_list) == 0:
-            return [[1],["No data"]]
+            return [[0],["No data"]]
 
         max_value = sorted_list[-1]
 
@@ -200,9 +200,9 @@ class GithubData:
             "time_between_pr_a": self.convert_to_histogram(time_between_pr_assigned, 10, 1),
             "issues_assigned_closed": issues_assinged_closed,
             "pr_assigned_closed": pr_assigned_closed,
-            "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created or "N/A",
-            "avg_time_to_close_issue": average_time_to_close_issue or "N/A",
-            "avg_time_to_review_pr": average_time_to_review_pr or "N/A"
+            "avg_number_of_comments_in_created": round(average_number_of_comments_in_issues_created, 1) or "N/A",
+            "avg_time_to_close_issue": round(average_time_to_close_issue, 1) or "N/A",
+            "avg_time_to_review_pr": round(average_time_to_review_pr, 1) or "N/A"
 
         }
 
@@ -245,7 +245,14 @@ class GithubData:
             index = index + 1
             self.message = f"{self.task_id}: Done with {index}/{len(commits_list)} commits ({user_name})"
 
-        sorted_tuples = [list(x) for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
+        lang_labels = [x[0] for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
+        lang_values = [x[1] for x in sorted(languages.items(),key=lambda x: x[1], reverse=True)]
+
+        if len(lang_values) > 64:
+            lang_values = lang_values[:64]
+
+        if len(lang_labels) > 64:
+            lang_labels = lang_labels[:64]
 
         if len(repos) > 10:
             repos = repos[:10]
@@ -288,7 +295,8 @@ class GithubData:
             "repos": repos,
             "time_between_commits": self.convert_to_histogram(differences, 15, 0.9),
             "diffbase_per_commit": self.convert_to_histogram(changes, 15, 0.9),
-            "languages": sorted_tuples
+            "lang_labels": lang_labels,
+            "lang_values": lang_values
         }
 
 
@@ -298,18 +306,18 @@ class GithubData:
         self.message =f"{self.task_id}: Done with basic info ({user_name})"
 
         return {
-            "bio": user.bio or "Bio not specified",
-            "company": user.company or "Company not specified",
-            "created_at": user.created_at,
-            "email": user.email or "Email Not Specified",
+            "bio": user.bio or "Not specified",
+            "company": user.company or "Not specified",
+            "created_at": str(user.created_at.date()),
+            "email": user.email or "Not Specified",
             "followers": user.followers or "Hidden",
             "following": user.following or "Hidden",
-            "hireable": user.hireable or "Hiring status not specified",
-            "location": user.location or "Location not specified",
-            "name": user.name or "Name not specified",
+            "hireable": user.hireable or "Not specified",
+            "location": user.location or "Not specified",
+            "name": user.name or "Not specified",
             "login": user.login,
             "private_repos_owned": user.owned_private_repos or "Hidden",
-            "updated_at": user.updated_at or "Hidden",
+            "updated_at": str(user.updated_at.date()) or "Hidden",
             "url": user.url,
             "team_count": user.team_count or "Hidden",
             "avatar_url": user.avatar_url

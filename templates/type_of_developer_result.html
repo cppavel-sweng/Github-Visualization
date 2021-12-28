@@ -2,8 +2,44 @@
 <meta charset="utf-8">
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style type="text/css">
+    .color_custom { background: #4A596E !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+    .profile_name_color {background: #E8d5d5 !important}
+  </style>
 </head>
 <body>
+  <header>
+    <!-- Navbar -->
+    <nav class="fw-bold navbar navbar-expand-lg navbar-light color_custom">
+      <div class="container-fluid">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarExample01"
+                aria-controls="navbarExample01"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarExample01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link text-white " aria-current="page" href="../">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="../type-of-developer">Type of developer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="../drop_developer_database">Drop developer database</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar -->
+  </header>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -12,107 +48,155 @@
   <script>
         const di = {{developer_issues_data|safe}};
   </script>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <img src="{{developer_basic_details["avatar_url"]}}" class="img-fluid rounded" alt="Responsive image">
+  <div class="p-5 bg-light">
+    <div class="container">
+      <div class="row profile_name_color">
+        <div class="col border border-5">
+          <div class="text-center pb-1 pt-1">
+            <h2><b>Name:</b> {{developer_basic_details["name"]}}, <b>Username:</b> <a href="https://github.com/{{developer_basic_details["login"]}}" class="link-primary">{{developer_basic_details["login"]}}</a></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col border border-5">
+          <div class="text-center">
+            <img src="{{developer_basic_details["avatar_url"]}}" class="img-fluid rounded w-75" alt="Responsive image">
+          </div>
+        </div>
+
+        <div class="col border border-5">
+          
+          <p><b>Bio:</b> {{developer_basic_details["bio"]}}</p>
+          <p><b>Company:</b> {{developer_basic_details["company"]}}</p>
+          <p><b>Email:</b> {{developer_basic_details["email"]}}</p>
+          <p><b>Location:</b> {{developer_basic_details["location"]}}</p>
+        </div>
+        
+        <div class="col border border-5">
+          <p><b>Profile created:</b> {{developer_basic_details["created_at"]}}</p>
+          <p><b>Profile last updated:</b> {{developer_basic_details["updated_at"]}}</p>
+          <p><b>Open for work:</b> {{developer_basic_details["hireable"]}}</p>
+        </div>
+
+        <div class ="col border border-5">
+          <p class><b>Following:</b> {{developer_basic_details["following"]}} users</p>
+          <p class><b>Followed by:</b> {{developer_basic_details["followers"]}} users</p>
+        </div>
       </div>
 
-      <div class="col">
-        <p class="fw-bold">{{developer_basic_details["name"]}}</p>
-        <p class="fw-bold">{{developer_basic_details["bio"]}}</p>
-        <p class="fw-bold">{{developer_basic_details["company"]}}</p>
-        <p class="fw-bold">{{developer_basic_details["email"]}}</p>
-        <p class="fw-bold">{{developer_basic_details["location"]}}</p>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="p_langs"></canvas>
+        </div>
+        <div class="col border border-5">
+          <p><b>Total commit count in the analysis period (as returned by github search):</b> {{developer_detailed_data["commit_count"]}} </p>
+          <p><b>Median commit size:</b> {{developer_detailed_data["median_diffbase_per_commit"]}} changes</p>
+          <p><b>Median time between consequtive commits:</b> {{developer_detailed_data["median_time_between_commits"]}} hours</p>
+          <p><b>Average commit size:</b> {{developer_detailed_data["average_change_size"]}} changes </p>
+          <p><b>Average time between consequtive commits:</b> {{developer_detailed_data["average_time_between_commits"]}} hours</p>
+          <div id="repos">
+            <b>List of 10 most recent repos user worked on (most recent comes first): </b>
+            <script type="text/javascript">
+              const repos = dd["repos"];
+              for (let i = 0; i < repos.length; i++) {
+                if (i !== repos.length-1){
+                  $("#repos").append("<a href=\"https://github.com/" + repos[i] +"\">" + repos[i] + "</a>, ");
+                }
+                else{
+                  $("#repos").append("<a href=\"https://github.com/" + repos[i] +"\">" + repos[i] + "</a>.");
+                }
+                
+              }
+            </script>
+          </div>
+        </div>
       </div>
-      
-      <div class="col">
-        <p class="fw-bold"><a href="https://github.com/{{developer_basic_details["login"]}}" class="link-primary">{{developer_basic_details["login"]}}</a></p>
-        <p class="fw-bold">Profile created: {{developer_basic_details["created_at"]}}</p>
-        <p class="fw-bold">Profile last updated: {{developer_basic_details["updated_at"]}}</p>
-        <p class="fw-bold">Open for work: {{developer_basic_details["hireable"]}}</p>
+      <div class="row">
+   
       </div>
-
-      <div class ="col">
-        <p class="fw-bold">Is following {{developer_basic_details["following"]}} users</p>
-        <p class="fw-bold">Is followed by {{developer_basic_details["followers"]}} users</p>
-        <p class="fw-bold">Owns {{developer_basic_details["private_repos_owned"]}} private repos</p>
-        <p class="fw-bold">Is member of {{developer_basic_details["team_count"]}} teams</p>
+      <div class="row profile_name_color">
+        <div class="col border border-5">
+          <div class="text-center pb-2 pt-2">
+            <h4>The below 2 Histograms were cut at 90 percentile to remove outliers</h4>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col" id="programming_langs">
-        List of programming languages and the sizes of changes made with them:
-        <script type="text/javascript">
-          const languages = dd["languages"];
-          for (let i = 0; i < languages.length; i++){
-            $("#programming_langs").append("<p>" + languages[i][0] + ": " + languages[i][1] + " additions \& deletions in recent commits</p>")
-          }
-       </script>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="time_between_commits_dis"></canvas>
+        </div>
       </div>
-      <div class="col" id="repos">
-        List of 10 most recent repos user worked on (most recent comes first).
-        <script type="text/javascript">
-          const repos = dd["repos"];
-           for (let i = 0; i < repos.length; i++) {
-             $("#repos").append("<p><a href=\"https://github.com/" + repos[i] +"\">" + repos[i] + "</a></p>");
-           }
-        </script>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="diffbase_dis"></canvas>
+        </div>
       </div>
-      <div class="col">
-        <p>Total commit count in the analysis period (most recent): {{developer_detailed_data["commit_count"]}} </p>
-        <p>Median commit size in LoC: {{developer_detailed_data["median_diffbase_per_commit"]}}</p>
-        <p>Median time between consequtive commits: {{developer_detailed_data["median_time_between_commits"]}} hours</p>
-        <p>Average commit size in LoC: {{developer_detailed_data["average_change_size"]}}</p>
-        <p>Average time between consequtive commits: {{developer_detailed_data["average_time_between_commits"]}} hours</p>
+      <div class="row profile_name_color">
+        <div class="col border border-5">
+          <div class="text-center pb-2 pt-2">
+            <h4>Collaboration metrics based on issues and PRs the user created or was assigned to</h4>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <p class="text-center fw-bold">The below 2 distributions were cut at 90 percentile to remove outliers</p>
-    </div>
-    <div class="row">
-      <div class="col">
-        <canvas id="time_between_commits_dis"></canvas>
+      <div class="row">
+        <div class="col border border-5">
+          <p>Created <b>{{developer_issues_data["issues_created"]}} issues</b></p>
+          <p>Created <b>{{developer_issues_data["pr_created"]}} pull requests</b></p>
+          <p>Was assigned to <b>{{developer_issues_data["issues_assigned"]}} issues</b></p>
+          <p>Was assigned to <b>{{developer_issues_data["pr_assigned"]}} pull requests</b></p>
+        </div>
+        <div class="col border border-5">
+          <p>Closed <b>{{developer_issues_data["issues_assigned_closed"]}}/{{developer_issues_data["issues_assigned"]}}</b> issues assigned to them</p>
+          <p>Closed <b>{{developer_issues_data["pr_assigned_closed"]}}/{{developer_issues_data["pr_assigned"]}}</b> pull requests assigned to them</p>
+          <p><b>Average number of comments in issues created:</b> {{developer_issues_data["avg_number_of_comments_in_created"]}}</p>
+          <p><b>Average time to close issue:</b> {{developer_issues_data["avg_time_to_close_issue"]}} hours</p>
+          <p><b>Average time to close (review) PR:</b> {{developer_issues_data["avg_time_to_review_pr"]}} hours</p>
+        </div>
       </div>
-      <div class="col">
-        <canvas id="diffbase_dis"></canvas>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="time_between_is_c"></canvas>
+        </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <p>User created {{developer_issues_data["issues_created"]}} issues</p>
-        <p>User created {{developer_issues_data["pr_created"]}} pull requests</p>
-        <p>User was assigned to {{developer_issues_data["issues_assigned"]}} issues</p>
-        <p>User was assigned to {{developer_issues_data["pr_assigned"]}} pull requests</p>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="time_between_is_a"></canvas>
+        </div>
       </div>
-      <div class="col">
-        <p>User closed {{developer_issues_data["issues_assigned_closed"]}}/{{developer_issues_data["issues_assigned"]}} issues assigned to them</p>
-        <p>User closed {{developer_issues_data["pr_assigned_closed"]}}/{{developer_issues_data["pr_assigned"]}} pull requests assigned to them</p>
-        <p>Average number of comments in issues created: {{developer_issues_data["avg_number_of_comments_in_created"]}}</p>
-        <p>Average time to close issue: {{developer_issues_data["avg_time_to_close_issue"]}} hours</p>
-        <p>Average time to close (review) PR: {{developer_issues_data["avg_time_to_review_pr"]}} hours</p>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="time_between_pr_c"></canvas>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <canvas id="time_between_is_c"></canvas>
-      </div>
-      <div class="col">
-        <canvas id="time_between_is_a"></canvas>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <canvas id="time_between_pr_c"></canvas>
-      </div>
-      <div class="col">
-        <canvas id="time_between_pr_a"></canvas>
+      <div class="row">
+        <div class="col border border-5">
+          <canvas id="time_between_pr_a"></canvas>
+        </div>
       </div>
     </div>
   </div>
 
+  <script>
+      const PIE_CHART_COLORS  = [
+      "#004754", "#00FF00", "#0000FF", "#FF0000", "#01FFFE",
+      "#FFA6FE", "#FFDB66", "#006401", "#010067", "#95003A",
+      "#007DB5", "#FF00F6", "#FFEEE8", "#774D00", "#90FB92",
+      "#0076FF", "#D5FF00", "#FF937E", "#6A826C", "#FF029D",
+      "#FE8900", "#7A4782", "#7E2DD2", "#85A900", "#FF0056",
+      "#A42400", "#00AE7E", "#683D3B", "#BDC6FF", "#263400",
+      "#BDD393", "#00B917", "#9E008E", "#001544", "#C28C9F", 
+      "#FF74A3", "#01D0FF", "#000000", "#E56FFE", "#788231", 
+      "#0E4CA1", "#91D0CB", "#BE9970", "#968AE8", "#BB8800",
+      "#43002C", "#DEFF74", "#00FFC6", "#FFE502", "#620E00",
+      "#008F9C", "#98FF52", "#7544B1", "#B500FF", "#00FF78",
+      "#FF6E41", "#005F39", "#6B6882", "#5FAD4E", "#A75740", 
+      "#A5FFD2", "#FFB167", "#009BFF", "#E85EBE"
+    ];
 
+    function get_colors(n){
+      return PIE_CHART_COLORS.slice(0, n);
+    }
+  </script>
 
   <script>
     function create_bar_chart(id, labels, datapoints, title){
@@ -121,24 +205,8 @@
         datasets: [{
           label:  title,
           data: datapoints,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)'
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)'
-          ],
+          backgroundColor: get_colors(datapoints.length),
+          borderColor: get_colors(datapoints.length),
           borderWidth: 1
         }]
       };
@@ -152,6 +220,18 @@
               y: {
                 beginAtZero: true
               }
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: title,
+                font: {
+                  size: 20
+                  }
+                }
             }
           },
       };
@@ -164,16 +244,72 @@
       
   </script>
 
+  <script>
 
-<script>
-  
-   create_bar_chart("time_between_commits_dis", dd["time_between_commits"][1], dd["time_between_commits"][0], "Distribution of time between consequtive commits in hours.");
-   create_bar_chart("diffbase_dis", dd["diffbase_per_commit"][1], dd["diffbase_per_commit"][0], "Distribution of diffbase per commit in LoC.");
-   create_bar_chart("time_between_is_c", di["time_between_i_c"][1], di["time_between_i_c"][0], "Distribution of time between issues created");
-   create_bar_chart("time_between_is_a", di["time_between_i_a"][1], di["time_between_i_a"][0], "Distribution of time between issues assigned");
-   create_bar_chart("time_between_pr_c", di["time_between_pr_c"][1], di["time_between_pr_c"][0], "Distribution of time between PR created");
-   create_bar_chart("time_between_pr_a", di["time_between_pr_a"][1], di["time_between_pr_a"][0], "Distribution of time between PR assigned");
-</script>
+    function create_pie_chart(id, labels, datapoints, title){
+
+      let sum = 0;
+
+      for(let i = 0; i < datapoints.length; i++){
+        sum = sum + datapoints[i];
+      }
+
+      const DATA_COUNT = datapoints.length;
+      const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: sum};
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Change size by language',
+            data: datapoints,
+            backgroundColor: Object.values(get_colors(datapoints.length)),
+          }
+        ]
+      };
+
+      const config = {
+        type: 'pie',
+        data: data ,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: title,
+              font: {
+                  size: 20
+              }
+            }
+          }
+        },
+      };
+
+      console.log("created chart");
+      
+      const myChart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
+
+  </script>
+
+  <script>
+    create_pie_chart("p_langs", dd["lang_labels"], dd["lang_values"], "Change size by programming language");
+  </script>
+
+  <script>
+    create_bar_chart("time_between_commits_dis", dd["time_between_commits"][1], dd["time_between_commits"][0], "Histogram of time between consequtive commits in hours");
+    create_bar_chart("diffbase_dis", dd["diffbase_per_commit"][1], dd["diffbase_per_commit"][0], "Histogram of change size per commit");
+    create_bar_chart("time_between_is_c", di["time_between_i_c"][1], di["time_between_i_c"][0], "Histogram of time between consequtive issues created");
+    create_bar_chart("time_between_is_a", di["time_between_i_a"][1], di["time_between_i_a"][0], "Histogram of time between consequtive issues assigned");
+    create_bar_chart("time_between_pr_c", di["time_between_pr_c"][1], di["time_between_pr_c"][0], "Histogram of time between consequtive PRs created");
+    create_bar_chart("time_between_pr_a", di["time_between_pr_a"][1], di["time_between_pr_a"][0], "Histogram of time between consequtive PRs assigned");
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

@@ -9,11 +9,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Type of Developer</title>
+    <style type="text/css">
+      .color_custom { background: #4A596E !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+    </style>
   </head>
   <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="fw-bold navbar navbar-expand-lg navbar-light color_custom">
           <div class="container-fluid">
             <button
                     class="navbar-toggler"
@@ -29,16 +32,13 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" aria-current="page" href="../">Home</a>
+                  <a class="nav-link text-white " aria-current="page" href="../">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="">Type of developer</a>
+                  <a class="nav-link text-white " href="">Type of developer</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../top-developers-for-a-repo">Top developers for a repo</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../drop_developer_database">Drop developer database</a>
+                  <a class="nav-link text-white " href="../drop_developer_database">Drop developer database</a>
                 </li>
               </ul>
             </div>
@@ -46,65 +46,91 @@
         </nav>
         <!-- Navbar -->
       </header>
-      <ul class="list-group">
-        <li class="list-group-item">Click "start computation" and wait before it is completed.</li>
-        <li class="list-group-item">Click "show visualization" to see the result.</li>
-        <li class="list-group-item">If your github token is personal, you may sometimes exceed the API rate. Please wait for a few minutes in this case.</li>
-        <li class="list-group-item">The results are cached in the database, so you do not have to rerun the computation, if it was already completed. </li>
-        <li class="list-group-item">If something goes wrong, navigate to "Drop developer database" page to reset.</li>
-        <li class="list-group-item">You may start computation for multiple users, the progress will be shown for both of them, but the progress messages will be alternating between the different computations.</li>
-      </ul>
-      <br/>
-      <div class="w-50 mx-auto offset-md-2">
-        <script>
-          function ask_compute(){
-            function check_progress(task_id) {
+      <div class="p-5 bg-light">
+        <div class="container">
+          <div class="row">
+            <div class="col border border-5">
+              <div class="text-center">
+                <h2 type="fw-bold">Instructions</h2>
+              </div>
+              <hr/>
+              <ul class="text-left mx-auto">
+                <li>Click "start computation" and wait before it is completed.</li>
+                <li class="mt-2">Click "show visualization" to see the result.</li>
+                <li class="mt-2">If your github token is personal, you may sometimes exceed the API rate. Please wait for a few minutes in this case.</li>
+                <li class="mt-2">For some handles the secondary API rate may be exceeded in a single search query if a personal token is used.</li>
+                <li class="mt-2">The results are cached in the database, so you do not have to rerun the computation, if it was already completed. </li>
+                <li class="mt-2">If something goes wrong, navigate to "Drop developer database" page to reset.</li>
+                <li class="mt-2">You may start computation for multiple users, the progress will be shown for all of them, but the progress messages will be alternating between the different computations.</li>
+                <li class="mt-2">If the handle you supplied fails to be analyzed, you could try "cppavel" or "cppavel-sweng". It worked well on these.</li>
+              </ul>
+            </div>
+            <div class="col text-center border border-5">
+              <div class="text-center">
+                <h2 type="fw-bold">Interface</h2>
+              </div>
+              <hr/>
+              <div class="mx-auto">
+                <script>
+                  function ask_compute(){
+                    function check_progress(task_id) {
 
-              console.log("Check progress called");
-              function worker() {
-                console.log("Worker called");
-                $.get('progress/' + task_id, function(data) {
-                      console.log("Progress data received");
-                      document.getElementById("progress_of_task").innerHTML = data;
-                      if (data.substring(0,9) !=="Completed" && data.substring(0,6) !=="Failed") {
-                        console.log(data);
-                        setTimeout(worker, 1000);
+                      console.log("Check progress called");
+                      function worker() {
+                        console.log("Worker called");
+                        $.get('progress/' + task_id, function(data) {
+                              console.log("Progress data received");
+                              document.getElementById("progress_of_task").innerHTML = data;
+                              if (data.substring(0,9) !=="Completed" && data.substring(0,6) !=="Failed") {
+                                console.log(data);
+                                setTimeout(worker, 1000);
+                              }
+                        });
                       }
-                });
-              }
-              setTimeout(worker, 1000);
-            };
+                      setTimeout(worker, 1000);
+                    };
 
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                  if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    document.getElementById("your_task_id").innerHTML =
-                    "Your computation id is: " + this.responseText;
-                    check_progress(this.responseText);
-                  }
-            };
-            xhttp.open("GET", "compute_data/" + document.getElementById("handle").value, true);
-            xhttp.send();
-          };
- 
-        </script>
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                            console.log(this.responseText);
+                            document.getElementById("your_task_id").innerHTML =
+                            "Your computation id is: " + this.responseText;
+                            check_progress(this.responseText);
+                          }
+                    };
+                    xhttp.open("GET", "compute_data/" + document.getElementById("handle").value, true);
+                    xhttp.send();
+                  };
 
-        <script>
-          function show_visualization(){
-            window.open("type-of-developer/" + document.getElementById("handle").value, '_blank').focus();
-          };
-        </script>
-          <div class="form-group">
-            <input type="text" name = "handle" class="form-control" id="handle" placeholder="Enter user's github handle">
-          </div>
-          <button type="button" id="start_computation" onclick="ask_compute()" class="btn btn-primary mt-3">Start computation for the user</button>
-          <button type="button" id="show_visualization" onclick="show_visualization()" class="btn btn-primary mt-3">Show visualization for the user</button>
-          <br/>
-          <p class="text-center fw-bold" id="your_task_id">You will see the most recent computation task id here.</p>
-          <p class="text-center fw-bold" id="progress_of_task">You will see the progress messages here.</p>
+                </script>
+
+                <script>
+                  function show_visualization(){
+                    window.open("type-of-developer/" + document.getElementById("handle").value, '_blank').focus();
+                  };
+                </script>
+                  <div class="form-group">
+                    <input type="text" name = "handle" class="form-control" id="handle" placeholder="Enter user's github handle">
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col text-center">
+                        <button type="button" id="start_computation" onclick="ask_compute()" class="btn text-white fw-bold mt-3 color_custom">Start computation</button>
+                      </div>
+                      <div class="col text-center">
+                        <button type="button" id="show_visualization" onclick="show_visualization()" class="btn text-white fw-bold mt-3 color_custom">Show visualization</button>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <p class="text-center fw-bold" id="your_task_id">You will see the most recent computation task id here.</p>
+                  <p class="text-center fw-bold" id="progress_of_task">You will see the progress messages here.</p>
+              </div>
+            </div>
+        </div>
       </div>
-
+    </div>
    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

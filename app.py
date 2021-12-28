@@ -27,9 +27,9 @@ def github_gathering(developer_handle):
     if not developer_data:
 
         try:
-            developer_basic_details = g.get_basic_account_info(developer_handle)
             developer_detailed_data = g.get_detailed_data(developer_handle)
             developer_issues_data = g.search_issues(developer_handle)
+            developer_basic_details = g.get_basic_account_info(developer_handle)
         except Exception as e:
             print(e)
             g.message = f"Failed: (task_id:{g.task_id}, handle: {developer_handle}). \n {e}"
@@ -114,7 +114,7 @@ def type_of_developer_result(handle):
     else:
         return (f"<h1>Sorry, no data found for such developer: {handle}.<br/>"
                  f"Consider starting the computation for {handle} on the previous page.<br/>"
-                 f"After the computation is completed you will be able to see the"
+                 f"After the computation is completed you will be able to see the "
                  f"visualization.</h1>")
 
 @app.route('/top-developers-for-a-repo')

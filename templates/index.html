@@ -9,11 +9,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Main Page</title>
+
+    <style type="text/css">
+      .color_custom { background: #4A596E !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+    </style>
   </head>
   <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="fw-bold navbar navbar-expand-lg navbar-light color_custom">
           <div class="container-fluid">
             <button
                     class="navbar-toggler"
@@ -29,31 +33,50 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" aria-current="page" href="">Home</a>
+                  <a class="nav-link text-white " aria-current="page" href="">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="type-of-developer">Type of developer</a>
+                  <a class="nav-link text-white " href="type-of-developer">Type of developer</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="top-developers-for-a-repo">Top developers for a repo</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="drop_developer_database">Drop developer database</a>
+                  <a class="nav-link text-white " href="drop_developer_database">Drop developer database</a>
                 </li>
               </ul>
             </div>
           </div>
         </nav>
         <!-- Navbar -->
-      
-        <!-- Jumbotron -->
-        <div class="p-5 text-center bg-light">
-          <h1 class="mb-3">Github Data Visualization</h1>
-          <h4 class="mb-3">Software Engineering</h4>
-          <h4 class="mb-3">Pavel Petrukhin</h4>
-        </div>  
-        <!-- Jumbotron -->
       </header>
+
+      <!-- Jumbotron -->
+      <div class="p-5 bg-light">
+        <h1 class="mb-3 text-center">Github Data Visualization</h1>
+        <h4 class="mb-3 text-center">Pavel Petrukhin</h4>
+        <div class="text-center">
+          <button type="button" class="btn color_custom text-white text-center fw-bold" onclick="location.href='type-of-developer';">Start</button>
+        </div>
+        <hr/>
+        <div class="text-center">
+          <h2 type="fw-bold">Description</h2>
+        </div>
+        <div class="center-block">
+          <p class="w-75 mx-auto text-justify">
+            The website analyzes the data from GitHub API for a given user. The idea is to obtain
+            <b>metrics that are important for each part of the software engineering process</b>. The project
+            not only evaluates size of changes, languages and technologies but also <b>how the developer interacts 
+            with other developers</b>. This is achieved by processing the data about issues and pull requests and looking
+            at metrics such as average time it required the user to close the issue assigned to them or the average 
+            number of comments that was present in the issues and/or pull requests the user created.
+          </p>
+          <p class="mx-auto w-75 text-justify">
+            The app serves as a great proof of concept for measuring Software Engineering. Even within the limits of college
+            project, it is possible to gather a lot of data about developers, meaning that a dedicated team of software engineers 
+            could create a very effective measuring tool using GitHub API data. 
+          </p>
+        </div>   
+        <hr/>
+      </div>  
+      <!-- Jumbotron -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
