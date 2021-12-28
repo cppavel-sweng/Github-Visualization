@@ -147,6 +147,7 @@ class GithubData:
 
         if count_closed > 0:
             average_time_to_close_issue = average_time_to_close_issue/(count_closed * 3600)
+            average_time_to_close_issue = round(average_time_to_close_issue, 1)
         else:
             average_time_to_close_issue = None
 
@@ -168,6 +169,7 @@ class GithubData:
 
         if count_closed > 0:
             average_time_to_review_pr = average_time_to_review_pr/(count_closed * 3600)
+            average_time_to_review_pr = round(average_time_to_review_pr, 1)
         else:
             average_time_to_review_pr = None
 
@@ -184,6 +186,7 @@ class GithubData:
 
         if number_of_issues_created + number_of_pr_created > 0:
             average_number_of_comments_in_issues_created = average_comments/(number_of_issues_created + number_of_pr_created)
+            average_number_of_comments_in_issues_created = round(average_number_of_comments_in_issues_created,1)    
         else:
             average_number_of_comments_in_issues_created = None
 
@@ -200,9 +203,9 @@ class GithubData:
             "time_between_pr_a": self.convert_to_histogram(time_between_pr_assigned, 10, 1),
             "issues_assigned_closed": issues_assinged_closed,
             "pr_assigned_closed": pr_assigned_closed,
-            "avg_number_of_comments_in_created": round(average_number_of_comments_in_issues_created, 1) or "N/A",
-            "avg_time_to_close_issue": round(average_time_to_close_issue, 1) or "N/A",
-            "avg_time_to_review_pr": round(average_time_to_review_pr, 1) or "N/A"
+            "avg_number_of_comments_in_created": average_number_of_comments_in_issues_created or "N/A",
+            "avg_time_to_close_issue": average_time_to_close_issue or "N/A",
+            "avg_time_to_review_pr": average_time_to_review_pr or "N/A"
 
         }
 
