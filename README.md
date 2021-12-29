@@ -27,8 +27,6 @@ In the below screenshots, some of the diagrams are empty because my main account
 
 ![Example diagram: "Histogram of change size per commit"](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_diagram_two.png).
 
-![Example diagram: "Histogram of change size per commit"](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_diagram_two.png).
-
 ![Example bottom section of the report - data based on collaboration and Histogram of time between consequtive issues created in hours](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_bottom_section.png).
 
 ![Example diagram: "Histogram of time between consequtive issues assigned in hours"](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_diagram_three.png).
