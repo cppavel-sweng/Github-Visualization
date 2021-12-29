@@ -42,3 +42,8 @@ In the below screenshots, some of the diagrams are empty because my main account
 ### Testing Strategy
 
 ### Technologies used
+
+MongoDB (pymongo) - database
+Pygithub - accessing github api
+Flask - backend
+HTML, JQuery, Bootstrap - frontend
