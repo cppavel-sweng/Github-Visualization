@@ -19,7 +19,7 @@ For example, a developer may have a lot of contributions in C++ and a lot of pul
 
 ### Example report and Video Demo
 
-The histograms show the distribution of the data. On the horizontal axis there are labeled columns, each label is an interval for the metric, for example average change size per commit. The height of the column represents how many of all the changes detected fall into that interval.
+The histograms show the distribution of the data. On the horizontal axis there are labeled columns, each label is an interval for the metric, for example average change size per commit. The height of the column represents how many of all the values observed fall into that interval.
 
 In the below screenshots, some of the diagrams are empty because my main account [cppavel](https://github.com/cppavel) does not have any issues assigned, PRs created and PRs assigned.
 
