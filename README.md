@@ -15,9 +15,11 @@ The project fetches data from github API for a prompted user handle and visualiz
 
 I decided to call such report "type of developer" as it contains metrics that determine the things that developer normally works on.
 
-For example, a developer may have a lot of contributions in C++ and a lot of pull requests and issues they were involved with, so we can deduce they are a Open Source C++ developer.
+For example, a developer may have a lot of contributions in C++ and a lot of pull requests and issues they were involved with, so we can deduce they are an Open Source C++ developer.
 
 ### Example report and Video Demo
+
+![Example top section of the report](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/example_top_section.png).
 
 ### Metrics explanation 
 
