@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request, render_template
+import os
 import pymongo
 from threading import Thread
 from pymongo import MongoClient
 from github_data import GithubData
+from github import Github
 
 
 app = Flask(__name__)
@@ -27,7 +29,7 @@ def github_gathering(developer_handle):
 
     db = client["developer_db"]
     developer_data = db.developer_data.find_one({"handle": developer_handle})
-    g = GithubData(task_id)
+    g = GithubData(task_id, Github(os.environ["GITHUB_TOKEN"]))
     g_table[task_id] = g
     
     if not developer_data:

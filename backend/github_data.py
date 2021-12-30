@@ -1,4 +1,3 @@
-from github import Github
 import re
 from datetime import timezone
 from programming_languages import EXTENSION_TO_LANG
@@ -7,10 +6,10 @@ import os
 
 class GithubData:
 
-    def __init__(self, task_id):
+    def __init__(self, task_id, github):
         self.message = f"{task_id}: Working..."
         self.task_id = task_id
-        self.g = Github(os.environ["GITHUB_TOKEN"])
+        self.g = github
 
     def convert_to_histogram(self, list, bins, percentile_to_keep):
         """
