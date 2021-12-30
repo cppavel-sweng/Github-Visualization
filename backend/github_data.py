@@ -56,9 +56,14 @@ class GithubData:
 
     def extract_repo_name(self, commit_url):
         """Simple regex to extract repo name out of the link."""
+
         pattern = re.compile("https://api.github.com/repos/(.*)/git/")
-        match = pattern.search(commit_url).group(1)
-        return match 
+        matches = pattern.search(commit_url)
+        if matches and matches.group(1):
+            return matches.group(1)
+        else:
+            return None
+        
 
     def convert_paginated_list_into_regular_list(self, paginated_list):
         """
@@ -82,6 +87,7 @@ class GithubData:
                 label_for_output: information for updating the progress message
                 user_name: required to make progress messsage more specific
         """
+
         time_between_issues = []
 
         for index in range(0, len(issues) - 1):
@@ -114,9 +120,9 @@ class GithubData:
                 if user_name == issue.closed_by.login:
                     count_closed = count_closed + 1
 
-                average_time_to_close_issue = (average_time_to_close_issue + 
-                    issue.closed_at.replace(tzinfo=timezone.utc).timestamp() - 
-                    issue.created_at.replace(tzinfo=timezone.utc).timestamp())
+                    average_time_to_close_issue = (average_time_to_close_issue + 
+                        issue.closed_at.replace(tzinfo=timezone.utc).timestamp() - 
+                        issue.created_at.replace(tzinfo=timezone.utc).timestamp())
 
         if count_closed > 0:
             average_time_to_close_issue = average_time_to_close_issue/(count_closed * 3600)

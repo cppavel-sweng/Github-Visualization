@@ -14,6 +14,7 @@ RUN pip install -r requirements.txt
 COPY tests/test.sh .
 COPY tests/github_mock.py .
 COPY tests/github_data_test.py .
+COPY tests/test_expected_results.py .
 COPY github_data.py .
 COPY programming_languages.py .
 

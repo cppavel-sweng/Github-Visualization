@@ -40,7 +40,13 @@ def github_gathering(developer_handle):
             developer_basic_details = g.get_basic_account_info(developer_handle)
         except Exception as e:
             print(e)
-            g.message = f"Failed: (task_id:{g.task_id}, handle: {developer_handle}). \n {e}"
+            user_limits = g_table[task_id].g.get_rate_limit()
+            g.message = (f"Failed: (task_id:{g.task_id}, handle: {developer_handle}).<br/> "
+                        f"Error: {e}. .<br/> Your API limits, for core: "
+                        f"{user_limits.core.remaining}/{user_limits.core.limit} requests left, "
+                        f"which will be reset at {user_limits.core.reset}, for search: "
+                        f"{user_limits.search.remaining}/{user_limits.search.limit} requests left, "
+                        f"which will be reset at {user_limits.search.reset}.")
 
         mydb = client["developer_db"]
         collection = mydb["developer_data"]
