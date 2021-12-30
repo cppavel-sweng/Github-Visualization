@@ -39,6 +39,21 @@ In the below screenshots, some of the diagrams are empty because my main account
 
 ### Metrics explanation 
 
+Both commits and issues data is gathered in most recent order using Github Search API to ensure relevancy of the results.
+
+* I decided to analyze what languages the developer has used recently, because it can show their areas of experties or the languages they are starting to use. This data could be used to recommend users as mentors or as mentees, if paired with some simple AI engine.
+* Median and average time between consequtive commits can tell us how active the developer is.
+* Median and average change per commit tell us how well the developer can break down the changes into smaller pieces.
+* It is also interesting to look at the distributions of time between consequtive commits and change per commit. However, due to breaks in development and configuration commits these distributions tend to have a lot of outliers, so they are cut at 90 percentile to be more readable.
+* A few other metrics examine how many issues/PRs user has created/was assigned to. These are important for examining how well the developer can collaborate.
+* We can see how many issues they user has closed out of all issues that were assigned to them, this tell us how the developer handles feature requests and tickets.
+* Average time to close the issue can help us understand how quick the developer responds to feature requests and tickets.
+* Average time to review PR tell us how quickly the user reviews code assigned to them. 
+* Average number of comments in issues and PRs created help us understand how influential are users contributions to the discussions. Moreover, they user could be a new hire or an intern, not very familliar with style guides, hence they are getting loads of comments on their PRs.
+* Again, it is interesting to have a look at the distributions.
+
+To sum up, we can see that the metrics provided can be used to infer lots of different things about the developer. 
+
 ### Testing Strategy
 
 * I used Docker to ensure that the testing and running environments remain the same regardless the machine I am working on. This increases the reproducibility of bugs.
