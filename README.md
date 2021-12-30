@@ -43,7 +43,7 @@ In the below screenshots, some of the diagrams are empty because my main account
 
 * I used Docker to ensure that the testing and running environments remain the same regardless the machine I am working on. This increases the reproducibility of bugs.
 * I used parameterized testing to make my tests more readable and less repetitive. 
-* I created a mock class for the pygithub.Github class to ensure my tests are hermetic (not dependent on external APIs or services). 
+* I mocked the pygithub.Github class to ensure my tests are hermetic (not dependent on external APIs or services). 
 
 Here is the result of my unit tests:
 
