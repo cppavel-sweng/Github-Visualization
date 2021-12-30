@@ -41,6 +41,16 @@ In the below screenshots, some of the diagrams are empty because my main account
 
 ### Testing Strategy
 
+* I used docker to ensure that the testing and running environments remain the same regardless the machine I am working on. This increases the reproducibility of bugs.
+* I used parameterized testing to make my tests more readable and less repetitive. 
+* I created a mock class for the pygithub.Github class to ensure my tests are hermetic (not dependent on external APIs or services). 
+
+Here is the result of my unit tests:
+
+![Test results](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/tests.png).
+
+Next steps could be testing the API, i.e. integration tests, but this is outside of the scope of this project.
+
 ### Technologies used
 
 * MongoDB (pymongo) - database
