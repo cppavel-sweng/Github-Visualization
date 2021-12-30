@@ -3,9 +3,9 @@
 ### Running on your local machine
 
 1. Clone the project
-2. Rename .env_example to .env and put your Github token in it. 
-3. Execute ./run.cmd. The website will be hosted on localhost:5000. 
-4. Execute ./exit.cmd, if you would like to stop all containers.
+2. Rename [.env_example](https://github.com/cppavel-sweng/Github-Visualization/blob/main/.env_example) to .env and put your Github token in it. 
+3. Execute [./run.cmd](https://github.com/cppavel-sweng/Github-Visualization/blob/main/run.cmd). The website will be hosted on localhost:5000. 
+4. Execute [./exit.cmd](https://github.com/cppavel-sweng/Github-Visualization/blob/main/exit.cmd), if you would like to stop all containers.
 
 ### What it does
 
@@ -50,6 +50,8 @@ Here is the result of my unit tests:
 ![Test results](https://github.com/cppavel-sweng/Github-Visualization/blob/main/images/tests.png).
 
 Next steps could be testing the API, i.e. integration tests, but this is outside of the scope of this project.
+
+To run tests, please navigate to [backend/](https://github.com/cppavel-sweng/Github-Visualization/tree/main/backend) and execute [./run_tests.cmd](https://github.com/cppavel-sweng/Github-Visualization/blob/main/backend/run_tests.cmd).
 
 ### Technologies used
 
